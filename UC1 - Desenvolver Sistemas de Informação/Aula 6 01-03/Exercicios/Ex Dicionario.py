@@ -10,9 +10,8 @@ def q6():
     for i in s:
         p.append(i[::-1])
     p= sorted(p)
-    s.clear
+    s.clear()
     print(p)
-    for i in s:
+    for i in p:
         s.append(i[::-1])
     print(s)
-q6()
