@@ -93,12 +93,9 @@ chamadaQ4=0
 listaString=['a','ab','abc','abcd','k','jhkl','kh','jkhlg']
 chamadaQ5=0
 def Questão5(lista):
-    def maiorString(string):
-        maior=len(lista[0])
-        if len(string)>maior:
-            maior= len(string)
-        return maior
-    for item in listaString:
-        print(maiorString(item))
-
-Questão5(listaString)   
+    maior = lista[0]
+    for item in lista:
+        if len(item)> len(maior):
+            maior=item
+    return maior
+print(Questão5(listaString))
