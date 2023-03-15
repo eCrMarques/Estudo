@@ -16,7 +16,13 @@ class Triangulo:
         print(perimetro)
     
     def MaiorLado(self):
-        pass
+        Lista=[self.LadoA,self.LadoB,self.LadoC]
+        maior=Lista[0]
+        for item in Lista:
+            if item>maior:
+                item=item
+                maior=item
+        print(f'O Lado maior é {maior} do {Lista[str(item)]}')
 
 trio =Triangulo(1,4,5)
 trio.MaiorLado()
