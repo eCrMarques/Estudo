@@ -8,7 +8,6 @@
 # de batalha que recebe os 2 objetos e determine quem sai
 # ganhando.
 import random
-import time
 class Pokemon:
     def __init__(self,nome,tipo,ataque,vida,velocidade,apelido=None):
         self.nome = nome
@@ -20,10 +19,43 @@ class Pokemon:
         if apelido!=None:
             self.nome=apelido
 
+    #Pokemon Selvagem Aleatorio
     def Selvagem():
-        random.choice([])
-        Selvagem = {'nome': 'Charmander', 'tipo': 'Fogo', 'ataque': 52, 'vida': 39, 'velocidade': 65}
-    
+        dex={'Rattata':{
+            'tipo':'Normal',
+            'ataque':56,
+            'vida':30,
+            'velocidade':72,
+        },'Pidgey':{
+            'tipo':'Voador',
+            'ataque':45,
+            'vida':40,
+            'velocidade':56,},
+        'Weedle':{
+            'tipo':'Inseto',
+            'ataque':35,
+            'vida':40,
+            'velocidade':50,},
+        'Caterpie':{
+            'tipo':'Inseto',
+            'ataque':30,
+            'vida':45,
+            'velocidade':45,},
+        'Metapod':{
+            'tipo':'Inseto',
+            'ataque':20,
+            'vida':50,
+            'velocidade':30,},
+        'Kakuna':{
+            'tipo':'Inseto',
+            'ataque':25,
+            'vida':45,
+            'velocidade':35,}}
+        poke=random.choice(['Rattata','Pidgey','Weedle','Caterpie','Metapod','Kakuna'])
+        Selvagem = Pokemon(poke,dex[poke]['tipo'],dex[poke]['ataque'],dex[poke]['vida'],dex[poke]['velocidade'])
+        return Selvagem
+
+
     #Pokemon Mais Veloz
     def speed(pokemon1,pokemon2):
         lista=[]
@@ -59,7 +91,6 @@ class Pokemon:
                         print(f'{oponente.nome} Atacou: {self.nome}\nVida Restante: // {self.vida} //\n')
 
 
-
         #Corrigir a inversão caso os Pokemons Tenham sido Invertido
         if contador==10:
             copia =self.__dict__.copy
@@ -67,7 +98,7 @@ class Pokemon:
             oponente.__dict__=copia()
 def Menu():
     print('---------------MENU---------------\n      1 --- Lutar ---- 1\n      2 --- Curar --- 2\n      3 --- Explorar --- 3')
-
+    return int(input('\n--- Escolha: '))
 
 
 meuPokemon= Pokemon('Charmander','Fogo',52,39,65,'Char')
@@ -76,8 +107,12 @@ pokemon2= Pokemon('Rattata','Normal',56,30,72)
 pokemon3= Pokemon('Fearow','Voador',90,65,100)
 
 #Atacar
-meuPokemon.atacar(pokemon3)
+print(pokemon1.__dict__)
+print(Pokemon.Selvagem().__dict__)
 
+#Explorar
+if Menu() ==3 :
+    print(meuPokemon.atacar(Pokemon.Selvagem()))
 
 
 

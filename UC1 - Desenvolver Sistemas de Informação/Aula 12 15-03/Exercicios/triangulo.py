@@ -22,7 +22,6 @@ class Triangulo:
             if item>maior:
                 item=item
                 maior=item
-        print(f'O Lado maior é {maior} do {Lista[str(item)]}')
 
 trio =Triangulo(1,4,5)
 trio.MaiorLado()
