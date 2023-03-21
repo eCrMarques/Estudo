@@ -70,19 +70,19 @@ while chamadaQ3<5:
 # vezes a função foi chamada e imprimir o valor da contagem ao final de cada
 # chamada.
 chamadaQ4=0
-# def Questão4():
-#     numero=int(input("Digite um Valor:"))
-#     def fatorial(Valor):
-#         resultado=1
-#         global chamadaQ4
-#         for i in range(1,Valor+1):
-#             resultado=resultado*i
-#         chamadaQ4+=1
-#         return resultado
-#     print(f'fatorial de {numero} é : {fatorial(numero)}\nfoi chamada {chamadaQ4} vezes')
+def Questão4():
+    numero=int(input("Digite um Valor:"))
+    def fatorial(Valor):
+        resultado=1
+        global chamadaQ4
+        for i in range(1,Valor+1):
+            resultado=resultado*i
+        chamadaQ4+=1
+        return resultado
+    print(f'fatorial de {numero} é : {fatorial(numero)}\nfoi chamada {chamadaQ4} vezes')
 
-# while chamadaQ4<5:
-#     Questão4()
+while chamadaQ4<5:
+    Questão4()
 
 # 5. Escreva uma função que receba uma lista de strings como parâmetro e retorne a
 # string com o maior número de caracteres. A função deve utilizar uma variável local
@@ -90,12 +90,36 @@ chamadaQ4=0
 # repetição para percorrer a lista. Em seguida, utilize uma variável global para contar
 # quantas vezes a função foi chamada e imprimir o valor da contagem ao final de cada
 # chamada.
+
 listaString=['a','ab','abc','abcd','k','jhkl','kh','jkhlg']
 chamadaQ5=0
 def Questão5(lista):
+    global chamadaQ5
+    chamadaQ5 +=1
     maior = lista[0]
     for item in lista:
         if len(item)> len(maior):
             maior=item
     return maior
-print(Questão5(listaString))
+print(Questão5(listaString),'\n Função foi chamada ',chamadaQ5,' Vezes')
+
+# 6. Escreva uma função que receba um número inteiro como parâmetro e retorne True
+# se o número for primo e False caso contrário. A função deve utilizar uma variável
+# local para armazenar o resultado e uma estrutura de repetição para verificar se o
+# número é divisível por outro número. Em seguida, utilize uma variável global para
+# contar quantas vezes a função foi chamada e imprimir o valor da contagem ao final
+# de cada chamada.
+chamadaQ6=0
+def Questão6(numero):
+    global chamadaQ6
+    chamadaQ6+=1
+    primo=True
+    if numero==1:
+        primo=False
+    for i in range(2,numero):
+        if numero%i==0:
+            primo=False
+    return primo
+while chamadaQ6<5:
+    num=int(input('Numero:'))
+    print(Questão6(num),'Função Chamada',chamadaQ6,'Vezes')
