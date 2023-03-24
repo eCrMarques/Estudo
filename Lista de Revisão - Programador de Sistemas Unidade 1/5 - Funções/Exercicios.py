@@ -37,7 +37,6 @@ print(Questão3(listaNumeros))
 # 4. Escreva uma função que receba uma lista de dicionários contendo informações
 # sobre pessoas (nome, idade, cidade) e retorne uma lista contendo apenas os nomes
 # das pessoas que moram em uma cidade específica.
-
 listaDicionario=[{'Nome':'Cristian','idade':'20','Cidade':'Fortaleza'},{'Nome':'João','idade':'19','Cidade':'Fortaleza'},{'Nome':'Pedro','idade':'25','Cidade':'Caucaia'}]
 def Questão4(lista):
     listaD=[]
