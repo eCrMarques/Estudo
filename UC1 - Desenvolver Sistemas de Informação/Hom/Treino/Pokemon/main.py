@@ -1,3 +1,3 @@
-import Textos
+from Textos import *
 import Pokemon
-Textos.Menu(Textos.velocidadeDoTexto)
+Menu(velocidadeDoTexto)

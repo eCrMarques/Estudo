@@ -53,3 +53,9 @@ def Lento(texto,velocidadeDotexto,normal=None):
 #     nome.append((Pokedex[i]['tipo']))
 # print(nome)
 
+def TodosPokemons():
+    todos=[]
+    for i in range(0,len(Pokedex),2):
+        todos.append(Pokedex[i])
+    return todos
+

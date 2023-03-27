@@ -1,35 +1,8 @@
 import time
-velocidadeDoTexto=0.01
-
-class Cidades:
-    def __init__(self, nome , centro, mercado):
-        self.nome=nome
-        self.centro=centro
-        self.mercado=mercado
-
-    def Curar(self):
-        pass
-
-    def Loja(self):
-        pass
-    
-
-class Rotas:
-    def __init__(self, nome, pokemons, npcs):
-        self.nome = nome
-        self.pokemons= pokemons
-        self.npcs = npcs
-
-    def Encontros(self):
-        pass
-
-    def Personagens(self):
-        pass
-
-    def Procurar(self):
-        pass
+velocidadDoTexto=0.005
 
 def imprimir(texto,velocidadeDotexto):
+
     for x in texto:
         print(x,end='',flush=True)
         time.sleep(velocidadeDotexto)
@@ -44,12 +17,12 @@ def loop(texto,vezes,velocidadeDoTexto):
 def Menu(velocidadeDoTexto):
     imprimir('---------------Menu---------------\n\n'
           '  1- - -- ---New Game--- -- - -1\n'
-          '        2--  -Opções- --2          \n'
-          '            3- Sair -3             \n'
+          '        2--  -Opções- --2\n'
+          '            3- Sair -3\n'
           ,velocidadeDoTexto)
     match int(input()):
         case 1:
-            loop("--------Começando Jogo----------",1,0.073)
+            loop("--------Começando Jogo----------",1,0.077)
         case 2:
             Opcoes(velocidadeDoTexto)
         case 3:
@@ -57,9 +30,9 @@ def Menu(velocidadeDoTexto):
 
 def Opcoes(velocidadeDoTexto):
     imprimir('1- -- ---Velocidade De Texto--- -- -1\n'
-               '  2   - -- -Excluir Salvo- -- -2\n'
-          '          3-   Salvar   -3           \n'
-          '            4 -Sair- 4\n',velocidadeDoTexto)
+               '     2- -- -Excluir Salvo- -- -2\n'
+          '         3- - Voltar - -3\n'
+           ,velocidadeDoTexto)
     match int(input()):
         case 1:
             match velocidadeDoTexto:
@@ -84,12 +57,42 @@ def Opcoes(velocidadeDoTexto):
         case 2:
             pass
         case 3:
-            pass
-        case 4:
             Menu(velocidadeDoTexto)
 
-def Textos():
-    imprimir(f'\t\t--Seja Bem-Vindo ao Mundo Pokemon--\nEscolha seu primeiro Pokemon:\n\tSquirtle\tCharmander\tBulbasaur\n',0.01)
+def Textos(Local):
+    if Local==0:
+        print('Seja Bem-Vindo ao Torneio Pokemon\n'
+              'É a sua Primeira vez em um Torneio?')
+        resposta=input()
+        if resposta=='Sim':
+            print(
+            'Entendo, sendo assim você pode escolher entre um desses Pokemons para iniciar sua aventura\n'
+            '(1)Charmander\n(2)Squirtle\n(3)Bulbasaur')
+            pokemon = input()
+            # Capturar(pokemon)
+        elif resposta =='Não':
+            print('Seja Bem-Vindo de Volta')
 
+    elif Local==1:
+        print('Torneio 1')
 
-Textos()
+    elif Local==2:
+        print('Torneio 2')
+
+    elif Local==3:
+        print('Torneio 3')
+def lprint(texto):
+    imprimir(texto,velocidadDoTexto)
+
+def OpçõesLuta():
+    lprint(f'1 -- Atacar\n'
+                '2 -- Mochila\n'
+                '3 -- Fugir\n')
+    match int(input()):
+        case 1:
+            return True
+        case 2:
+            print('Mochila')
+        case 3:
+            print('Fugir')
+    
