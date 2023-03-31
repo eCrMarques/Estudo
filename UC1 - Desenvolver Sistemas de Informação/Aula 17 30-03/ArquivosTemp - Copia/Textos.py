@@ -60,33 +60,23 @@ def Opcoes(velocidadeDoTexto):
             Menu(velocidadeDoTexto)
 
 def Textos(Local=None):
-    if Local==None:
-        Local=0
-    else:
-        Local=Local
-
-    if Local==0:
-        print('\nSeja Bem-Vindo ao Torneio Pokemon\n'
-              'É a sua Primeira vez em um Torneio?')
-        resposta=input()
-        if resposta=='Sim':
-            print(
-            'Entendo, sendo assim você pode escolher entre um desses Pokemons para iniciar sua aventura\n'
-            '(1)Charmander\n(2)Squirtle\n(3)Bulbasaur')
-            return input()
-            # Capturar(pokemon)
-        elif resposta =='Não':
-            print('Seja Bem-Vindo de Volta')
-
-    elif Local==1:
-        print('Torneio 1\nLevel 5-20')
-
-    elif Local==2:
-        print('Torneio 2\nLevel 20-35')
-
-    elif Local==3:
-        print('Torneio 3\nLevel 35-50')
-
+    match Local:
+        case 'Centro':
+            print('''Seja Bem-Vindo ao Centro Pokemon
+            Deseja Curar seus Pokemons?''')
+            op=input()
+            if op=='Sim':
+                curarPokemons()
+            else:
+                print('''Negar Centro''')
+        case 'Mark':
+            print('''Seja Bem-Vindo ao Market
+            Deseja Comprar items?''')
+            op=input()        
+            if op=='Sim':
+                print('items')
+            else:
+                print('''Negar Market''')
 def lprint(texto):
     imprimir(texto,velocidadDoTexto)
 

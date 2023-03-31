@@ -1,2 +1,2 @@
-Victreebel,Planta,80,105,65,70
-Moltres,Fogo,90,100,90,90
+Venusaur,Planta,80,82,83,80
+Charizard,Fogo,78,84,78,100

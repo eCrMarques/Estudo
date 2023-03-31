@@ -271,7 +271,12 @@ def Selvagem(tipo):
             return aleatorio(Psiquico,'Psiquico')
         case 'Normal':
             return aleatorio(Normal,'Normal')
+
 def NomePokemon(pokemon):
+    if type(pokemon) == str:
+        pokemon=pokemon
+    else:
+        pokemon=random.choice(pokemon)
     local =Pokedex.index(pokemon)
     tipo=Pokedex[local+1]['tipo']
     if len(tipo)<=2:
