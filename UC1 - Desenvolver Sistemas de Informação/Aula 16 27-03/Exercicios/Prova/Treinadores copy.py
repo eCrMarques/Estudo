@@ -42,7 +42,7 @@ class Treinador:
                 timeAtaque=primeiro.checarDano(segundo)
         else:
             primeiro=self.pokemons[poketime]
-            segundo=oponente
+            segundo=oponente.pokemons[pokeinimigo]
             timeAtaque=primeiro.checarDano(segundo)
             oponenteAtaque=segundo.checarDano(primeiro)
         
@@ -63,7 +63,6 @@ class Treinador:
 
                     print(f'{segundo.nome} Ataca seu {primeiro.nome} com {oponenteAtaque} de Dano\n')
                     primeiro.hp-=oponenteAtaque
-                    time=2
             else:
                 time=2
                 print(f'Seu {segundo.nome} Ataca o {primeiro.nome} com {timeAtaque} de Dano\n')
@@ -73,16 +72,16 @@ class Treinador:
                 if OpçõesLuta():
                     print(f'{primeiro.nome} Ataca seu {segundo.nome} com {oponenteAtaque} de Dano')
                     segundo.hp-=timeAtaque
-                    time=1   
+                        
             if primeiro.hp<=0:
-                if time==1:
-                    if len(oponente.time())>1 and (len(oponente.time())-1)>pokeinimigo:
+                if primeiro.nome==oponente.pokemons[pokeinimigo].nome:
+                    if (len(oponente.time())-1)>pokeinimigo:
                         pokeinimigo=pokeinimigo+1
                         eu.batalha(npc,poketime,pokeinimigo)
                     else:
                         print(segundo.nome,'Win')
                         break
-                elif time==2:
+                elif segundo.nome==self.pokemons[poketime].nome:
                     if (len(self.time())-1)>poketime:
                         poketime=poketime+1
                         eu.batalha(npc,poketime,pokeinimigo)
@@ -90,13 +89,13 @@ class Treinador:
                         print(segundo.nome,'Win')
                         break
             elif segundo.hp<=0:
-                if time==1:
+                if segundo.nome==oponente.pokemons[pokeinimigo].nome:
                     if (len(oponente.time())-1)>pokeinimigo:
                         pokeinimigo=pokeinimigo+1
                         eu.batalha(npc,poketime,pokeinimigo)
                     else:
                         print(segundo.nome,'Win')
-                elif time==2:
+                elif segundo.nome==self.pokemons[poketime].nome:
                     if (len(self.time())-1)>poketime:
                         poketime=poketime+1
                         eu.batalha(npc,poketime,pokeinimigo)

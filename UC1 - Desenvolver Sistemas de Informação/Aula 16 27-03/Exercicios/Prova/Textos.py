@@ -88,11 +88,19 @@ def OpçõesLuta():
     lprint(f'1 -- Atacar\n'
                 '2 -- Mochila\n'
                 '3 -- Fugir\n')
-    match int(input()):
-        case 1:
-            return True
-        case 2:
-            print('Mochila')
-        case 3:
-            print('Fugir')
+    num=input()
+    try:
+        num=int(num)
+        if num<4:
+            match num:
+                case 1:
+                    return True
+                case 2:
+                    print('Mochila')
+                case 3:
+                    print('Fugir')
+        else:
+            print('Valor invalido')
+    except:
+        print('Valor Invalido')
     
