@@ -1,0 +1,2 @@
+Victreebel,Planta,80,105,65,70
+Moltres,Fogo,90,100,90,90
