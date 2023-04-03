@@ -128,6 +128,7 @@ class Treinador:
                 if pokemoninimigo._hp <= 0:
                     break
                 elif self.pokemons[poketime]._hp <= 0:
+                    self.pokemons[poketime]._hp = 0
                     break
                 print(
                     f'Seu {self.pokemons[poketime].nome} Esta Pronto Para a Batalha')
@@ -172,7 +173,7 @@ class Treinador:
                       '------=========WIN=========------')
                 resultado = False
                 if oponente.__class__ == Oponente:
-                    self.dinheiro -= oponenteDinheiro
+                    self.dinheiro -= int(oponenteDinheiro)
                     print(f"Você Perdeu {oponenteDinheiro} de Dinheiro")
 
         return resultado
@@ -190,7 +191,7 @@ class Jogador(Treinador):
         if '' in self.bag:
             self.bag.remove('')
         self.bag.append(item)
-        print(self.bag)
+        return self.bag
 
     def VerMochila(self):
         print('\tSeus Pokemons são\n')

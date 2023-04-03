@@ -1,0 +1,27 @@
+{
+ "cidade": "Rota1",
+ "cidadeAnterior": "Viridian",
+ "Jogador": [
+  "1",
+  220
+ ],
+ "Pokemons": [
+  [
+   "Bulbasaur",
+   45,
+   45,
+   49,
+   45
+  ],
+  [
+   "Wartortle",
+   59,
+   63,
+   80,
+   58
+  ]
+ ],
+ "Bolsa": [
+  ""
+ ]
+}

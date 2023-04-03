@@ -1,13 +1,58 @@
 from Textos import *
 from Treinadores import *
 from locais import *
+import json
 
 Vezes=0
-
+Player=''
 cidadeAnterior=''
 cidade='Pallet'
 cidades=['LigaPokemon','PassagemSubsolo','Pallet','Viridian','Pewter','Cerulean','Vermilion','Saffron','Celadon','Fuchsia','Lavender','Cinnabar']
 
+def salvar():
+    with open('Save.json','w') as Jogo:
+        save={}
+        meuTime=[]
+        Jogar=[]
+        for valores in Player.__dict__.keys():
+            if valores!='pokemons' and valores!='bag':
+                Jogar.append(Player.__dict__[valores])
+            if valores=='bag':
+                Bolsa=Player.__dict__[valores]
+            
+        print(Jogar)
+        for pokemon in Player.pokemons:
+            time=[]
+            for valores in pokemon.__dict__.keys():
+                if valores =='nome' or valores =='_hp' or valores =='_atk' or valores =='_df' or valores =='_spd':
+                    time.append(pokemon.__dict__[valores])
+            meuTime.append(time)
+        save['cidade']=cidade
+        save['cidadeAnterior']=cidadeAnterior
+        save['Jogador']=Jogar
+        save['Pokemons']=meuTime
+        save['Bolsa']=Bolsa
+        json.dump(save,Jogo,indent=1)
+
+def carregar():
+    try:
+        with open('Save.json','r') as Jogo:
+            Save=json.load(Jogo)
+            global cidade
+            global cidadeAnterior
+            cidade=Save['cidade']
+            cidadeAnterior=Save['cidadeAnterior']
+            Meutime=[]
+            for pokemon in Save['Pokemons']:
+                meuPokemon=NomePokemon(pokemon[0])
+                meuPokemon_hp=pokemon[1]
+                meuPokemon_atk=pokemon[2]
+                meuPokemon_df=pokemon[3]
+                meuPokemon_spd=pokemon[4]
+                Meutime.append(meuPokemon)
+            return Jogador(Save['Jogador'][0],Meutime,dinheiro=Save['Jogador'][1])
+    except:
+        return Player
 # Curar Pokemon recebendo o objeto Pokemon e adicionando um Hp salvo Anterior para o Hp Atual
 def CurarPokemon(pokemons):
     if type(pokemons)== list:
@@ -142,6 +187,8 @@ def Explorar(cidade): # Verificar as Cidades existentes e modifica a Atual ou En
         Aventura(rota)
         
 def opçõesCidade(Nome=None): # Opções dos Locais
+    carregar()
+    salvar()
     if Nome==None:
         Nome=cidade
     else:
@@ -239,10 +286,11 @@ def opçõesCidade(Nome=None): # Opções dos Locais
         case _:
             print('Valor Invalido')
             opçõesCidade(Nome)
+Player=carregar()
 
 
-# Principal
-if Vezes==0:
+
+if Player =='':
     if Menu(0.005):
         print('''
         Seja Bem-Vindo a sua aventura pokemon, primeiro precisamos saber o seu Nome''')
@@ -257,6 +305,7 @@ if Vezes==0:
             match op:
                 case '1':
                     Player.capturar('Charmander')
+                    Player.capturar('Squirtle')
                     break
                 case '2':
                     Player.capturar('Squirtle')
@@ -268,7 +317,6 @@ if Vezes==0:
                     print('Opção Inexistente')
             Vezes=1
         opçõesCidade()
-                
-                
-if Vezes>0:
+else:
     opçõesCidade()
+                

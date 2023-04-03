@@ -20,7 +20,7 @@ def Menu(velocidadeDoTexto):
         print('---------------Menu---------------\n\n'
             '  1- - -- ---New Game--- -- - -1\n'
             '        2--  -Sair- --2\n'
-            ,velocidadeDoTexto)
+            )
         match input():
             case '1':
                 loop("--------Começando Jogo----------",1,0.027)
