@@ -193,7 +193,7 @@ class Jogador(Treinador):
         if '' in self.bag:
             self.bag.remove('')
         self.bag.append(item)
-        print(self.bag)
+        
 
     def VerMochila(self):
         print('\tSeus Pokemons são\n')

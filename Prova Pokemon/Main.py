@@ -283,6 +283,7 @@ def opçõesCidade(Nome=None): # Opções dos Locais
                     opçõesCidade()
                 case '2':
                     print('''Mapa''')
+                    opçõesCidade(Nome)
                 case _:
                     print('Valor Invalido')
                     opçõesCidade(Nome)
@@ -306,11 +307,6 @@ if cidade=='Pallet' and cidadeAnterior=='':
             op =input('')
             match op:
                 case '1':
-                    Player.capturar('Charmander')
-                    Player.capturar('Charmander')
-                    Player.capturar('Charmander')
-                    Player.capturar('Charmander')
-                    Player.capturar('Charmander')
                     Player.capturar('Charmander')
                     break
                 case '2':

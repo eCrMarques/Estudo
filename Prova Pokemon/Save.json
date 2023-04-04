@@ -1,0 +1,27 @@
+{
+ "cidade": "Rota1",
+ "cidadeAnterior": "Pallet",
+ "Jogador": [
+  "1",
+  1800
+ ],
+ "Pokemons": [
+  [
+   "Charmander",
+   0,
+   55,
+   45,
+   65
+  ],
+  [
+   "Pidgey",
+   0,
+   45,
+   40,
+   56
+  ]
+ ],
+ "Bolsa": [
+  ""
+ ]
+}
