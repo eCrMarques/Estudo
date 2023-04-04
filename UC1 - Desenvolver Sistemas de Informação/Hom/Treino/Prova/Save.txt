@@ -1,0 +1,2 @@
+Charizard,Fogo,78,84,78,100
+Charizard,Fogo,78,84,78,100

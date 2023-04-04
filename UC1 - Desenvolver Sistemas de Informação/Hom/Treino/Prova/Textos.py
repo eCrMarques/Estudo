@@ -1,6 +1,5 @@
 import time
 velocidadDoTexto=0.005
-
 def imprimir(texto,velocidadeDotexto):
 
     for x in texto:
@@ -15,14 +14,15 @@ def loop(texto,vezes,velocidadeDoTexto):
         imprimir(f'\r{texto}',velocidadeDoTexto)
        
 def Menu(velocidadeDoTexto):
-    imprimir('---------------Menu---------------\n\n'
+    print('---------------Menu---------------\n\n'
           '  1- - -- ---New Game--- -- - -1\n'
           '        2--  -Opções- --2\n'
           '            3- Sair -3\n'
           ,velocidadeDoTexto)
     match int(input()):
         case 1:
-            loop("--------Começando Jogo----------",1,0.077)
+            # loop("--------Começando Jogo----------",1,0.027)
+            return True
         case 2:
             Opcoes(velocidadeDoTexto)
         case 3:
@@ -59,40 +59,57 @@ def Opcoes(velocidadeDoTexto):
         case 3:
             Menu(velocidadeDoTexto)
 
-def Textos(Local):
-    if Local==0:
-        print('Seja Bem-Vindo ao Torneio Pokemon\n'
-              'É a sua Primeira vez em um Torneio?')
-        resposta=input()
-        if resposta=='Sim':
-            print(
-            'Entendo, sendo assim você pode escolher entre um desses Pokemons para iniciar sua aventura\n'
-            '(1)Charmander\n(2)Squirtle\n(3)Bulbasaur')
-            pokemon = input()
-            # Capturar(pokemon)
-        elif resposta =='Não':
-            print('Seja Bem-Vindo de Volta')
-
-    elif Local==1:
-        print('Torneio 1')
-
-    elif Local==2:
-        print('Torneio 2')
-
-    elif Local==3:
-        print('Torneio 3')
+def Textos(Local=None):
+    match Local:
+        case 'Centro':
+            print('''Seja Bem-Vindo ao Centro Pokemon
+            Deseja Curar seus Pokemons?''')
+            op=input()
+            if op=='Sim':
+                curarPokemons()
+            else:
+                print('''Negar Centro''')
+        case 'Mark':
+            print('''Seja Bem-Vindo ao Market
+            Deseja Comprar items?''')
+            op=input()        
+            if op=='Sim':
+                print('items')
+            else:
+                print('''Negar Market''')
 def lprint(texto):
     imprimir(texto,velocidadDoTexto)
 
 def OpçõesLuta():
     lprint(f'1 -- Atacar\n'
                 '2 -- Mochila\n'
-                '3 -- Fugir\n')
-    match int(input()):
-        case 1:
-            return True
-        case 2:
-            print('Mochila')
-        case 3:
-            print('Fugir')
-    
+                '3 -- Time\n'
+                '4 -- Fugir\n')
+    num=input()
+    try:
+        num=int(num)
+        if num<5:
+            match num:
+                case 1:
+                    return True
+                case 2:
+                    print('Mochila')
+                case 3:
+                    print("Time")
+                case 4:
+                    print('Fugir')
+        else:
+            print('Valor invalido')
+    except:
+        print('Valor Invalido')
+
+def verificar(opcao):
+    if opcao.isnumeric:
+        return True
+    else:
+        print('Digite um valor valido')
+# print('----Você Deseja-----\nComeçar o Torneio\nExplorar e se Aventurar\nIr no Centro Pokemon\nIr no Market')
+# opção=int(input())
+# if opção==1:
+#     opção=int(input('Torneios\n'))
+#     Textos(opção)

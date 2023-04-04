@@ -12,7 +12,7 @@ cidades=['LigaPokemon','PassagemSubsolo','Pallet','Viridian','Pewter','Cerulean'
 def CurarPokemon(pokemons):
     if type(pokemons)== list:
         for pokemon in pokemons:
-            pokemon.hp=pokemon.hpa()
+            pokemon._hp=pokemon.hpa()
     else:
         pokemons.hp=pokemon.hpa()
 
@@ -45,7 +45,7 @@ def Aventura(local):
     if Nome not in cidades:
         Ganhador=True
         for pokemon in Player.pokemons:  # Verificação de Hp do Time.
-            if pokemon.hp>0:
+            if pokemon._hp>0:
                 Ganhador=False
         if Ganhador:
             print('Seus Pokemons estão machucados vá ao Centro Pokemon')
@@ -77,7 +77,7 @@ def lutasTreinadores(local):
         Player.batalha(Rival)
         Ganhador=False
         for pokemon in Player.pokemons:
-            if pokemon.hp>0:     # Verificador de hp do time:
+            if pokemon._hp>0:     # Verificador de hp do time:
                 Ganhador=True
         if Ganhador:
             opçõesCidade(cidade)
@@ -159,7 +159,7 @@ def opçõesCidade(Nome=None): # Opções dos Locais
         case '2':
             Ganhador=True
             for pokemon in Player.pokemons:     # Impedir Lutas se O time estiver zerado
-                if pokemon.hp>0:
+                if pokemon._hp>0:
                     Ganhador=False
             if Ganhador:
                 print('Seus Pokemons estão machucados vá ao Centro Pokemon')
@@ -256,7 +256,7 @@ if Vezes==0:
             op =input('')
             match op:
                 case '1':
-                    Player.capturar('Charizard')
+                    Player.capturar('Charmander')
                     break
                 case '2':
                     Player.capturar('Squirtle')

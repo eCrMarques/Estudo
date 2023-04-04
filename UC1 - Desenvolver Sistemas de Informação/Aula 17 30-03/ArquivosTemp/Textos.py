@@ -1,5 +1,7 @@
 import time
-velocidadDoTexto=0.005
+import random 
+
+velocidadeDoTexto=0.005
 def imprimir(texto,velocidadeDotexto):
 
     for x in texto:
@@ -14,27 +16,26 @@ def loop(texto,vezes,velocidadeDoTexto):
         imprimir(f'\r{texto}',velocidadeDoTexto)
        
 def Menu(velocidadeDoTexto):
-    print('---------------Menu---------------\n\n'
-          '  1- - -- ---New Game--- -- - -1\n'
-          '        2--  -Opções- --2\n'
-          '            3- Sair -3\n'
-          ,velocidadeDoTexto)
-    match int(input()):
-        case 1:
-            # loop("--------Começando Jogo----------",1,0.027)
-            return True
-        case 2:
-            Opcoes(velocidadeDoTexto)
-        case 3:
-            exit
+    while True:
+        print('---------------Menu---------------\n\n'
+            '  1- - -- ---New Game--- -- - -1\n'
+            '        2--  -Sair- --2\n'
+            ,velocidadeDoTexto)
+        match input():
+            case '1':
+                loop("--------Começando Jogo----------",1,0.027)
+                return True
+            case '2':
+                exit
+            case _:
+                print('Opção invalida')
 
 def Opcoes(velocidadeDoTexto):
     imprimir('1- -- ---Velocidade De Texto--- -- -1\n'
-               '     2- -- -Excluir Salvo- -- -2\n'
-          '         3- - Voltar - -3\n'
+               '     2- -- -Voltar- -- -2\n'
            ,velocidadeDoTexto)
-    match int(input()):
-        case 1:
+    match input():
+        case '1':
             match velocidadeDoTexto:
                 case 0.01:
                     VTexto='Medio'
@@ -45,71 +46,82 @@ def Opcoes(velocidadeDoTexto):
             imprimir(f'        Velocidade Atual: {VTexto}\n'
                   f'             Alterar Para\n 1-Lento -- 2-Medio  -- 3-Rapido\n'
                   ,velocidadeDoTexto)
-            match int(input()):
-                case 1:
+            match input():
+                case '1':
                     velocidadeDoTexto=0.06
-                case 2:
+                case '2':
                     velocidadeDoTexto=0.01
-                case 3:
+                case '3':
                     velocidadeDoTexto=0.005
+                case _:
+                    print('Opção Inexistente')
             Opcoes(velocidadeDoTexto)
-        
-        case 2:
-            pass
-        case 3:
+
+        case '2':
             Menu(velocidadeDoTexto)
+        case _:
+            print('Opção Inexistente')
+            Opcoes(velocidadeDoTexto)
 
 def Textos(Local=None):
-    if Local==None:
-        Local=0
-    else:
-        Local=Local
-
-    if Local==0:
-        print('\nSeja Bem-Vindo ao Torneio Pokemon\n'
-              'É a sua Primeira vez em um Torneio?')
-        resposta=input()
-        if resposta=='Sim':
-            print(
-            'Entendo, sendo assim você pode escolher entre um desses Pokemons para iniciar sua aventura\n'
-            '(1)Charmander\n(2)Squirtle\n(3)Bulbasaur')
-            return input()
-            # Capturar(pokemon)
-        elif resposta =='Não':
-            print('Seja Bem-Vindo de Volta')
-
-    elif Local==1:
-        print('Torneio 1')
-
-    elif Local==2:
-        print('Torneio 2')
-
-    elif Local==3:
-        print('Torneio 3')
+    match Local:
+        case 'Centro':
+            print('''Seja Bem-Vindo ao Centro Pokemon
+            Deseja Curar seus Pokemons?''')
+            op=input()
+            if op=='Sim':
+                return 'Sim'
+            elif op=='Não':
+                return 'Não'
+            else:
+                return
+        case 'Mark':
+            print('''Seja Bem-Vindo ao Market
+            Deseja Comprar items?''')
+            op=input()
+            if op=='Sim':
+                return 'Sim'
+            elif op=='Não':
+                return 'Não'
+            else:
+                return
 
 def lprint(texto):
-    imprimir(texto,velocidadDoTexto)
+    imprimir(texto,velocidadeDoTexto)
 
-def OpçõesLuta():
-    lprint(f'1 -- Atacar\n'
-                '2 -- Mochila\n'
-                '3 -- Time\n'
-                '4 -- Fugir\n')
-    num=input()
-    try:
-        num=int(num)
-        if num<5:
-            match num:
-                case 1:
-                    return True
-                case 2:
-                    print('Mochila')
-                case 3:
-                    print("Time")
-                case 4:
-                    print('Fugir')
-        else:
-            print('Valor invalido')
-    except:
-        print('Valor Invalido')
+def Capturar(item):
+    resultado=False
+    match item:
+        case 'Poke ball':
+            chance=random.randrange(3)
+            if chance==0:
+                return True
+        case 'Great Ball':
+            chance=random.randrange(2)
+            if chance==0:
+                return True
+        case 'Ultra Ball':
+            chance=random.randrange(1)
+            print(item)
+            if chance==0:
+                return True
+
+def listaLocais(locais):
+     n=0
+     lista=[]
+     if type(locais)==str:
+         print(f'{1}--{locais}')
+         lista.append(locais)
+         valor=5-len(lista)
+         for i in range(valor):
+              lista.append('')
+     else:
+          for i in locais:
+               n+=1
+               lista.append(i)
+               print(f'{n}--{i}')
+          valor=5-len(lista)
+          for i in range(valor):
+              lista.append('')
+     return lista
 
