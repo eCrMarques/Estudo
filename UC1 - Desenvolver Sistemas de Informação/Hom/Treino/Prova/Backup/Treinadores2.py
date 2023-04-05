@@ -18,8 +18,13 @@ class Treinador:
         return lista
     
     def capturar(self,pokemon):
+        if type(pokemon) ==str :
+            pokemon=NomePokemon(pokemon)
         self.pokemons.append(pokemon)
-        return f'Pokemon Capturado: {pokemon.nome}'
+        with open ('Save.txt','w') as arquivo:
+            for pokemon in self.pokemons:
+                arquivo.write(f'{pokemon.nome},{pokemon.tipo},{pokemon.hp},{pokemon.atk},{pokemon.df},{pokemon.spd}\n')
+        return f'Pokemon Capturado: {pokemon}'
 
     def batalha(self,oponente,indextime=None ,indexinimigo=None,):
 
@@ -127,10 +132,11 @@ class Oponente(Treinador):
         super().__init__(nome, pokemons, dinheiro)
     
 
-eu=Jogador('Red','Charmander',dinheiro=654)
-npc=Oponente('Blue',Selvagem('GRASS'),1564)
-pokemonfogo=Selvagem('FIRE')
-pokemonplanta=Selvagem('GRASS')
-pokemonagua= Selvagem('WATER')
-
-print(eu.pokemons)
+eu=Jogador('Red',Selvagem('Planta'),dinheiro=654)
+npc=Oponente('Blue',Selvagem('Planta'),1564)
+pokemonfogo=Selvagem('Fogo')
+pokemonplanta=Selvagem('Planta')
+pokemonagua= Selvagem('Agua')
+eu.pokemons
+print(type(pokemonagua))
+eu.capturar(pokemonplanta)

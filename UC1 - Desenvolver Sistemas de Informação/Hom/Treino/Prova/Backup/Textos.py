@@ -73,7 +73,6 @@ def Textos(Local=None):
             print(
             'Entendo, sendo assim você pode escolher entre um desses Pokemons para iniciar sua aventura\n'
             '(1)Charmander\n(2)Squirtle\n(3)Bulbasaur')
-            Escolha= input()
             return input()
             # Capturar(pokemon)
         elif resposta =='Não':

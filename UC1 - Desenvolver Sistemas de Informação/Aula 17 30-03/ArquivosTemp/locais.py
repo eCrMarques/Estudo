@@ -138,3 +138,41 @@ def rotas(nome):
         case 'Mansion':
             return Mansion
 
+pokemons=[Rota21,
+Rota4,
+ViridianForest,
+Rota1,
+Rota22,
+Rota2,
+Rota3,
+Rota24,
+Rota25,
+Rota5,
+Rota6,
+Rota11,
+Rota7,
+Rota8,
+Rota16,
+Rota17,
+Rota18,
+Rota15,
+Rota14,
+Rota13,
+Rota10,
+Rota9,
+Rota19,
+Rota20,
+Rota22,
+DiglettCave,
+MtMoon,
+LavenderTown,
+RockTunnel,
+SeaIsland,
+Mansion]
+lista=[]
+for loc in pokemons:
+    lista.append(loc.selvagens)
+    if 'Electabuzz' in loc.selvagens:
+        print(loc)
+lista.sort()
+print(lista)

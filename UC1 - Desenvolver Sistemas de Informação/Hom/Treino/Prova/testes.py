@@ -1,14 +1,27 @@
-from Textos import *
-def vida(total, atual):
-     vida=''
-     vidaStr=str(atual)
-     total=int(total/10)
-     atual=int(atual/10)
-     if total==atual:
-          vida='/'*20+vidaStr+'/'*20
+from locais import *
+novaCidade='Pallet'
+cidade=novaCidade
+def listaLocais(locais):
+     lista=[]
+     if type(locais)==str:
+         lista=f'{1}--{locais}'
      else:
-          porcentagem=int(total/atual)
-          vida='/'*(20-int(20/porcentagem))+vidaStr+'-'*int(20/porcentagem)
-     return f'[{vida}]'
+          for i in locais:
+               n=+1
+               lista.append(f'{n}--{i}')
+     return lista
+def Explorar():
+    print(f'''\t\t---Local atual: {cidade}--- ''')
+    n=0
+    match cidade:
+        case "Pallet":
+            print(listaLocais(Pallet.rotas))
+            op=input()
+            if op==1:
+               global novaCidade
+               novaCidade='Viridian'
+        case 'Viridian':
+            locais=['Rota Liga Pokemon','Floresta de Viridian']
 
 
+Explorar()
