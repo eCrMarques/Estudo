@@ -27,7 +27,7 @@ class Pokemon:
             return 1
 
     def checarDano(self, oponente):
-        dano = self.checarVantagem(oponente)*(((self._atk/oponente._df)+2)*1.5)+random.randrange(1,10)
+        dano = self.checarVantagem(oponente)*(((self._atk/oponente._df)+2)*1.5)+random.randrange(1,4)
         return int(dano)
 
 
