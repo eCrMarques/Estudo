@@ -88,7 +88,7 @@ class Treinador:
             print(f'Meu time : {self.time()} \t{Time}')
             print(f'{self.nome}\t\t\t\t\t\t {Nome}\n'
                   f'{self.pokemons[poketime].nome} Vida [-------{self.pokemons[poketime]._hp}-------]\t\t{pokemoninimigo.nome} Vida [-------{pokemoninimigo._hp}-------]\n')
-
+            
             if self.pokemons[poketime]._spd > pokemoninimigo._spd and pokemoninimigo._hp >= timeAtaque:
 
                 if pokemoninimigo._hp <= 0:
@@ -97,7 +97,7 @@ class Treinador:
                     break
                 print(
                     f'Seu {self.pokemons[poketime].nome} Esta Pronto Para a Batalha')
-
+                
                 escolha = self.OpçõesLuta(self.bag[0])
                 if escolha:
                     if escolha == 'Capturado':
@@ -106,33 +106,21 @@ class Treinador:
                         self.bag.append('')
                         self.bag.pop(0)
                         pokemoninimigo._hp = 0
-                    else:
-                        print(f'{self.nome}\t\t\t\t\t\t {oponente.nome}\n'
-                              f'{self.pokemons[poketime].nome} Vida [-------{self.pokemons[poketime]._hp}-------]\t\t{pokemoninimigo.nome} Vida [-------{pokemoninimigo._hp}-------]\n')
-
-                        pokemoninimigo._hp -= timeAtaque
-
-                        print(
-                            f'{pokemoninimigo.nome} Ataca seu {self.pokemons[poketime].nome} com {oponenteAtaque} de Dano\n')
-                        self.pokemons[poketime]._hp -= oponenteAtaque
-
-            else:
-
+                        break
+                print(
+                    f'Seu {self.pokemons[poketime].nome} Ataca o {pokemoninimigo.nome} com {timeAtaque} de Dano')
+                pokemoninimigo._hp -= timeAtaque
                 print(
                     f'{pokemoninimigo.nome} Ataca seu {self.pokemons[poketime].nome} com {oponenteAtaque} de Dano\n')
                 self.pokemons[poketime]._hp -= oponenteAtaque
+                input()                
+                self.pokemons[poketime]._hp -= oponenteAtaque
 
-                print(f'{self.nome}\t\t\t\t\t\t {oponente.nome}\n'
-                      f'{self.pokemons[poketime].nome} Vida [-------{self.pokemons[poketime]._hp}-------]\t\t{pokemoninimigo.nome} Vida [-------{pokemoninimigo._hp}-------]\n')
-
+            else:
                 if pokemoninimigo._hp <= 0:
                     break
                 elif self.pokemons[poketime]._hp <= 0:
-                    self.pokemons[poketime]._hp = 0
                     break
-                print(
-                    f'Seu {self.pokemons[poketime].nome} Esta Pronto Para a Batalha')
-
                 escolha = self.OpçõesLuta(self.bag[0])
                 if escolha:
                     if escolha == 'Capturado':
@@ -141,10 +129,15 @@ class Treinador:
                         pokemoninimigo._hp = 0
                         self.bag.append('')
                         self.bag.pop(0)
-                    else:
-                        print(
-                            f'Seu {self.pokemons[poketime].nome} Ataca o {pokemoninimigo.nome} com {timeAtaque} de Dano')
-                        pokemoninimigo._hp -= timeAtaque
+                        break
+                print(
+                    f'{pokemoninimigo.nome} Ataca seu {self.pokemons[poketime].nome} com {oponenteAtaque} de Dano')
+                self.pokemons[poketime]._hp -= oponenteAtaque
+                print(
+                    f'Seu {self.pokemons[poketime].nome} Ataca o {pokemoninimigo.nome} com {timeAtaque} de Dano')
+                pokemoninimigo._hp -= timeAtaque
+                input()
+                
 
         oponenteDinheiro = random.randrange(300, 750)
         if pokemoninimigo._hp <= 0:
@@ -173,7 +166,10 @@ class Treinador:
                       '------=========WIN=========------')
                 resultado = False
                 if oponente.__class__ == Oponente:
-                    self.dinheiro -= int(oponenteDinheiro)
+                    if oponenteDinheiro>self.dinheiro:
+                        self.dinheiro=0
+                    else:
+                        self.dinheiro -= oponenteDinheiro
                     print(f"Você Perdeu {oponenteDinheiro} de Dinheiro")
 
         return resultado
@@ -191,7 +187,7 @@ class Jogador(Treinador):
         if '' in self.bag:
             self.bag.remove('')
         self.bag.append(item)
-        return self.bag
+        
 
     def VerMochila(self):
         print('\tSeus Pokemons são\n')
@@ -233,5 +229,3 @@ class Jogador(Treinador):
 class Oponente(Treinador):
     def __init__(self, nome, pokemons, dinheiro):
         super().__init__(nome, pokemons, dinheiro)
-
-

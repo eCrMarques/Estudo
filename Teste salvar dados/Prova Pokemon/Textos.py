@@ -124,4 +124,3 @@ def listaLocais(locais):
           for i in range(valor):
               lista.append('')
      return lista
-

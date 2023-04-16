@@ -1,4 +1,3 @@
-
 Pokedex=['Bulbasaur',{'tipo':['Planta','Venenoso'],'Hp':45,'Atk':45,'Def':49,'Speed':45},
          'Ivysaur',{'tipo':['Planta','Venenoso'],'Hp':60,'Atk':62,'Def':63,'Speed':60},
 'Venusaur',{'tipo':['Planta','Venenoso'],'Hp':80,'Atk':82,'Def':83,'Speed':80},

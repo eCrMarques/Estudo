@@ -46,6 +46,7 @@ Pokedex=['Bulbasaur',{'tipo':['Planta','Venenoso'],'Hp':45,'Atk':45,'Def':49,'Sp
 'Paras',{'tipo':['Inseto','Planta'],'Hp':35,'Atk':70,'Def':55,'Speed':25},
 'Parasect',{'tipo':['Inseto','Planta'],'Hp':60,'Atk':95,'Def':80,'Speed':30},
 'Venonat',{'tipo':['Inseto','Venenoso'],'Hp':60,'Atk':55,'Def':50,'Speed':45},
+'Venomoth',{'tipo':['Inseto','Venenoso'],'Hp':70,'Atk':65,'Def':60,'Speed':90},
 'Diglett',{'tipo':['Terrestre'],'Hp':10,'Atk':55,'Def':25,'Speed':95},
 'Dugtrio',{'tipo':['Terrestre','Aço'],'Hp':35,'Atk':100,'Def':50,'Speed':120},
 'Meowth',{'tipo':['Normal'],'Hp':40,'Atk':45,'Def':35,'Speed':90},

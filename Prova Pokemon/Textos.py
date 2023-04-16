@@ -2,18 +2,21 @@ import time
 import random 
 
 velocidadeDoTexto=0.005
-def imprimir(texto,velocidadeDotexto):
-
+def imprimir(texto,velocidadeDotexto,tipo=None):
+    if tipo == None:
+        tipo=True
     for x in texto:
-        print(x,end='',flush=True)
+        print(x,end='',flush=tipo)
         time.sleep(velocidadeDotexto)
 
-def loop(texto,vezes,velocidadeDoTexto):
+def loop(texto,vezes,velocidadeDoTexto,fls=None):
+    if fls==None:
+        fls=True
     x=' '*len(texto)
-    imprimir(texto,velocidadeDoTexto)
+    imprimir(texto,velocidadeDoTexto,tipo=fls)
     for i in range(vezes):
-        imprimir(f'\r{x}',velocidadeDoTexto)
-        imprimir(f'\r{texto}',velocidadeDoTexto)
+        imprimir(f'\r{x}',velocidadeDoTexto,tipo=fls)
+        imprimir(f'\r{texto}',velocidadeDoTexto,tipo=fls)
        
 def Menu(velocidadeDoTexto):
     while True:
@@ -26,62 +29,35 @@ def Menu(velocidadeDoTexto):
                 loop("--------Começando Jogo----------",1,0.027)
                 return True
             case '2':
-                exit
+                loop('Saindo....',1,0.06)
+                exit()
             case _:
                 print('Opção invalida')
 
-def Opcoes(velocidadeDoTexto):
-    imprimir('1- -- ---Velocidade De Texto--- -- -1\n'
-               '     2- -- -Voltar- -- -2\n'
-           ,velocidadeDoTexto)
-    match input():
-        case '1':
-            match velocidadeDoTexto:
-                case 0.01:
-                    VTexto='Medio'
-                case 0.005:
-                    VTexto='Rapido'
-                case 0.06:
-                    VTexto='Lento'
-            imprimir(f'        Velocidade Atual: {VTexto}\n'
-                  f'             Alterar Para\n 1-Lento -- 2-Medio  -- 3-Rapido\n'
-                  ,velocidadeDoTexto)
-            match input():
-                case '1':
-                    velocidadeDoTexto=0.06
-                case '2':
-                    velocidadeDoTexto=0.01
-                case '3':
-                    velocidadeDoTexto=0.005
-                case _:
-                    print('Opção Inexistente')
-            Opcoes(velocidadeDoTexto)
-
-        case '2':
-            Menu(velocidadeDoTexto)
-        case _:
-            print('Opção Inexistente')
-            Opcoes(velocidadeDoTexto)
 
 def Textos(Local=None):
     match Local:
         case 'Centro':
             print('''Seja Bem-Vindo ao Centro Pokemon
-            Deseja Curar seus Pokemons?''')
+Deseja Curar seus Pokemons?
+            S/N
+    Para Guardar/Trocar Digite (G)''')
             op=input()
-            if op=='Sim':
+            if op.lower()=='s':
                 return 'Sim'
-            elif op=='Não':
+            elif op.lower()=='n':
                 return 'Não'
+            elif op.lower()=='g':
+                return 'Guardar'
             else:
                 return
         case 'Mark':
             print('''Seja Bem-Vindo ao Market
-            Deseja Comprar items?''')
+            Deseja Comprar items?\nS/N''')
             op=input()
-            if op=='Sim':
+            if op.lower()=='s':
                 return 'Sim'
-            elif op=='Não':
+            elif op=='n':
                 return 'Não'
             else:
                 return
@@ -92,8 +68,9 @@ def lprint(texto):
 def Capturar(item):
     resultado=False
     match item:
-        case 'Poke ball':
+        case 'Poke Ball':
             chance=random.randrange(3)
+            print(chance)
             if chance==0:
                 return True
         case 'Great Ball':
@@ -102,7 +79,7 @@ def Capturar(item):
                 return True
         case 'Ultra Ball':
             chance=random.randrange(1)
-            print(item)
+            print(item, 'Usada')
             if chance==0:
                 return True
 
@@ -123,4 +100,56 @@ def listaLocais(locais):
           valor=5-len(lista)
           for i in range(valor):
               lista.append('')
+     print('Digite qualquer tecla para Voltar')
      return lista
+
+def Depot(Jogador):
+    if 'Pokemon' in str(type(Jogador)):
+        Centro.append(Jogador[0])
+        return Centro
+    Centro=Jogador[1]
+    while True:
+        print(f'Centro Pokemons Guardados')
+        for i,pokemon in enumerate(Centro):
+            print(f'{i+1:3}-||{pokemon.nome:12}||-', end='')
+            if (i+1)%5==0:
+                print('\n')
+        if print(end=''):
+            print('\n')
+        print(f'\nMeus Pokemons')
+        for i,pokemon in enumerate(Jogador[0].pokemons):
+            print(f'{i+1:3}--{pokemon.nome:12}', end='')
+        print("\n\nPara Guardar Insira o número do Pokemon\nTrocar insira (PokemonTime-PokemonGuardado)\nPegar Pokemon(-PokemonGuardado)\ts -- Sair",end='\n')
+        op=input('')
+        if op.lower() =='s':
+            break
+        else:
+            if '-' in op:
+                op=op.split('-')
+                if op[0].isnumeric():
+                    try:
+                        meupokemon=Jogador[0].pokemons[int(op[0])-1]
+                        Jogador[0].pokemons[int(op[0])-1]=Centro[int(op[1])-1]
+                        Centro[int(op[1])-1]=meupokemon
+                    except:
+                        print('Valor Invalido')
+                else:
+                    if len(Jogador[0].pokemons)<6 and len(Centro)>0 and int(op[1])<=len(Centro):
+                        Jogador[0].pokemons.append(Centro[int(op[1])-1])
+                        Centro.pop(int(op[1])-1)
+                    else:
+                        print('Não é Possivel ')
+            else:
+                try:
+                    if len(Jogador[0].pokemons)==1 or int(op)>len(Jogador[0].pokemons):
+                        print('\nNão é Possivel Ficar Sem Pokemon')
+                        input()
+                    else:
+                        Centro.append(Jogador[0].pokemons[int(op)-1])
+                        Jogador[0].pokemons.pop(int(op)-1)
+                except:
+                    print("Valor invalido")
+    return Centro
+                
+
+

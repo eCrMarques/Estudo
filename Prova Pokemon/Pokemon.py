@@ -199,7 +199,6 @@ def aleatorio(classe, tipo):
         return classe(Pokedex[local], '', Pokedex[local+1]['Hp'], Pokedex[local+1]['Atk'], Pokedex[local+1]['Def'], Pokedex[local+1]['Speed'])
     except:
         aleatorio = tipo
-        print(aleatorio)
         local = Pokedex.index(aleatorio)
         return classe(Pokedex[local], '', Pokedex[local+1]['Hp'], Pokedex[local+1]['Atk'], Pokedex[local+1]['Def'], Pokedex[local+1]['Speed'])
 

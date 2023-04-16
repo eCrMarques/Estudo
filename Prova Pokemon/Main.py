@@ -2,19 +2,47 @@ from Textos import *
 from Treinadores import *
 from locais import *
 import json
+import datetime
 
 Vezes=0
-
+Dp=[]
 cidadeAnterior=''
 cidade='Pallet'
 cidades=['LigaPokemon','PassagemSubsolo','Pallet','Viridian','Pewter','Cerulean','Vermilion','Saffron','Celadon','Fuchsia','Lavender','Cinnabar']
 
+def Idle():
+    try:
+        with open('Save.json','r') as Jogo:
+            lista=json.load(Jogo)
+            x=datetime.datetime.now()
+            tempoAtual=[x.strftime("%x").split('/'),x.strftime("%X").split(':')]
+            segundos=[]
+            for i,time in enumerate(lista["Tempo"]):
+                if time==lista["Tempo"][1]:
+                    segundos.append((3600*(int(tempoAtual[i][0])-int(time[0]))))
+                    segundos.append((((int(tempoAtual[i][1])-int(time[1]))*60)))
+                    segundos.append((int(tempoAtual[i][2])-int(time[2])))
+                elif time!=lista["Tempo"][1]:
+                    segundos.append((2592000*(int(tempoAtual[i][0])-int(time[0]))))
+                    segundos.append((((int(tempoAtual[i][1])-int(time[1]))*86400)))
+                    segundos.append(((int(tempoAtual[i][2])-int(time[2]))*86400*12))
+            
+            print(f'Você ficou {round((sum(segundos)/3600)-0.5)} Horas| {round((sum(segundos)%3600/60)-0.5)} Minutos| {sum(segundos)%60} Segundos| fora do jogo')
+            print(f'Ganhou {int(sum(segundos)/5)} de Dinheiro')
+            Player.dinheiro+=int(sum(segundos)/5)
+            input()
+    except:
+        pass
 def salvar():
     with open ('Save.json','w') as Jogo:
+        global Dp
         dicionario={}
         jogador=[]
         meuTime=[]
         bolsa=[]
+        Dptime=[]
+        x=datetime.datetime.now()
+        tempoAtual=[x.strftime("%x").split('/'),x.strftime("%X").split(':')]
         for item in Player.__dict__.keys():
             if item!='pokemons' and item!='bag':
                 jogador.append(Player.__dict__[item])
@@ -27,12 +55,24 @@ def salvar():
             lista.append(pokemon._atk)
             lista.append(pokemon._df)
             lista.append(pokemon._spd)
+            lista.append(pokemon._hpanterior)
             meuTime.append(lista)
         dicionario['cidade']=cidade
         dicionario['cidadeAnterior']=cidadeAnterior
         dicionario['Jogador']=jogador
         dicionario['Pokemons']=meuTime
         dicionario['Bolsa']=bolsa
+        dicionario["Tempo"]=tempoAtual
+        for pokemon in Dp:
+            lista=[]
+            lista.append(pokemon.nome)
+            lista.append(pokemon._hp)
+            lista.append(pokemon._atk)
+            lista.append(pokemon._df)
+            lista.append(pokemon._spd)
+            lista.append(pokemon._hpanterior)
+            Dptime.append(lista)
+        dicionario["Depot"]=Dptime
         json.dump(dicionario,Jogo,indent=1)
 
 def Carregar():
@@ -41,16 +81,28 @@ def Carregar():
             Save=json.load(Jogo)
             global cidade
             global cidadeAnterior
+            global Dp
             cidade=Save['cidade']
             cidadeAnterior=Save['cidade']
             meutime=[]
+            DpTime=[]
             for pokemon in Save['Pokemons']:
                 meupokemon=NomePokemon(pokemon[0])
                 meupokemon._hp=pokemon[1]
                 meupokemon._atk=pokemon[2]
                 meupokemon._df=pokemon[3]
                 meupokemon._spd=pokemon[4]
+                meupokemon._hpanterior=pokemon[5]
                 meutime.append(meupokemon)
+            for pokemon in Save["Depot"]:
+                meupokemon=NomePokemon(pokemon[0])
+                meupokemon._hp=pokemon[1]
+                meupokemon._atk=pokemon[2]
+                meupokemon._df=pokemon[3]
+                meupokemon._spd=pokemon[4]
+                meupokemon._hpanterior=pokemon[5]
+                DpTime.append(meupokemon)
+            Dp=DpTime
             Player=Jogador(Save['Jogador'][0],meutime,Save['Jogador'][1])
             Player.bag=Save['Bolsa']
             return Player
@@ -81,7 +133,7 @@ def opc(escolha,op1,op2,op3,op4,op5):
             return op5
         case _:
             pass
-    opçõesCidade(cidadeAnterior)
+    opçõesCidade(cidade)
 # Opção de Explorar Recebe uma lista de Rotas disponivel de um Objeto Local, Se a variavel Cidade For uma Rota, Cria-se uma Batalha contra Selvagem, Do Contrario Somente Atualiza a rota para uma Nova Cidade
 def Aventura(local):
     global cidade
@@ -105,7 +157,10 @@ def Aventura(local):
             resultado=False
             for i in range(random.randrange(1,4)):  # Quantidade de Inimigos
                 selvagem=NomePokemon(rota.selvagens)
+                print(f'Um {selvagem.nome} Apareceu !!!!')
+                input()
                 resultado=Player.batalha(selvagem)
+                input()
             if resultado:
                 cidade=Nome  # Se Ganhar altera a variavel global cidade Para a Rota Atual
                 opçõesCidade(Nome)
@@ -125,6 +180,7 @@ def lutasTreinadores(local):
             listaPokemons.append(NomePokemon(rota.selvagens))   #Time inimigo baseado em Pokemons da Rota Atual
         Rival=Oponente(Nome,listaPokemons,random.randrange(300,750))
         Player.batalha(Rival)
+        input()
         Ganhador=False
         for pokemon in Player.pokemons:
             if pokemon._hp>0:     # Verificador de hp do time:
@@ -133,10 +189,6 @@ def lutasTreinadores(local):
             opçõesCidade(cidade)
         else:
             opçõesCidade(cidadeAnterior) # Perder retorna a Ultima Cidade Visitada
-
-    else:
-        print('Não há Treinadores Por Aqui')  # se a Rota for uma Cidade, Não há Treinadores
-        opçõesCidade()
  
 def Explorar(cidade): # Verificar as Cidades existentes e modifica a Atual ou Entra em Rotas
     print(f'''\t\t---Local atual: {cidade}   --- ''')
@@ -216,13 +268,37 @@ def opçõesCidade(Nome=None): # Opções dos Locais
                 print('Seus Pokemons estão machucados vá ao Centro Pokemon')
                 opçõesCidade()
             else:
-                lutasTreinadores(Nome)
+                if Nome in cidades:
+                    op=input(f'Você Deseja Desafiar o Ginasio de {cidade} do Tipo {ginasio[cidade][0]}\n S-Sim ou N-Não\n')
+                    match op.lower():
+                        case 's':
+                            pokemonsLider=[]
+                            for pokemon in ginasio[cidade][2]:
+                                pokemonsLider.append(NomePokemon(pokemon))
+
+                            lider=Oponente(ginasio[cidade][1],pokemonsLider,random.randrange(2800,3600))
+                            loop(f'Lider {ginasio[cidade][1]} o Desafia !!!!',1,0.005,False)
+                            input()
+                            Player.batalha(lider)
+                            opçõesCidade()
+                        case 'n':
+                            print('Volte quando desejar Desafiar')
+                            opçõesCidade()
+                        case _:
+                            print('Informe uma opção Correta')
+
+                else:
+                    lutasTreinadores(Nome)
         case '3':
             if Nome in cidades:
                 resposta=Textos('Centro')   # Centro de Cura, retorna o hp ao valor padrão, com a variavel hpa( HpAnterior)
                 if resposta=='Sim':
                     CurarPokemon(Player.pokemons)
                     print(f'Seu Pokemon Foi curado ')
+                    opçõesCidade(Nome)
+                if resposta=='Guardar':
+                    global Dp
+                    Dp=Depot([Player,Dp])
                     opçõesCidade(Nome)
                 else:
                     pass
@@ -236,7 +312,7 @@ def opçõesCidade(Nome=None): # Opções dos Locais
                 if resposta=='Sim':
                     while True:
                         print(f'Dinheiro\t-{Player.dinheiro}-\n')
-                        print('1-Poke ball(1x) Preço 200\n2-Great Ball(2x) Preço 500\n3-Ultra Ball(4x) Preço 1200')
+                        print('1-Poke ball(1x) Preço 200\n2-Great Ball(2x) Preço 500\n3-Ultra Ball(4x) Preço 1200\n0 =-= Sair')
                         match input():
                             case '1':
                                 if Player.dinheiro>=200:        # Adiciona itens a Mochila e retira valor 
@@ -276,6 +352,7 @@ def opçõesCidade(Nome=None): # Opções dos Locais
             print(f'''-----{Player.nome}-----
             1 =-= Mochila
             2 =-= Mapa
+            3 =-= Sair
             ''')
             op =input()
             match op:
@@ -285,6 +362,8 @@ def opçõesCidade(Nome=None): # Opções dos Locais
                 case '2':
                     print('''Mapa''')
                     opçõesCidade(Nome)
+                case '3':
+                    exit()
                 case _:
                     print('Valor Invalido')
                     opçõesCidade(Nome)
@@ -323,4 +402,5 @@ if Player==None:
                 
                 
 else:
+    Idle()
     opçõesCidade()

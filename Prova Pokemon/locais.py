@@ -5,7 +5,17 @@ class Locais:
         self.centro=centro
         self.selvagens=selvagens
         self.rotas=rotas
-    
+
+ginasio={'Pallet':['Pedra','Brock',['Geodude','Onix']],
+        'Cerulean':['Agua','Misty',['Staryu','Starmie',]],
+         'Vermilion':['Eletrico','Lt.Surge',['Voltorb','Pikachu','Raichu']],
+          'Celadon':['Grama','Erika',['Victreebel','Tangela','Vileplume']], 
+          'Fuchsia':['Veneno','Koga',['Koffing','Koffing','Muk','Weezing']],
+          'Saffron':['Psiquico','Sabrina',['Kadabra','Mr. Mime','Venomoth','Alakazam']],
+          'Cinnabar':['Fogo','Blaine',['Growlithe','Ponyta','Rapidash','Arcanine']],
+          'Viridian':['Terra','Giovanni',['Rhyhorn','Dugtrio','Nidoqueen','Nidoking','Rhyhorn']]
+          }
+
 Pallet=Locais('Rota1')
 Rota1=Locais(['Viridian','Pallet'],selvagens=['Pidgey','Rattata'])
 

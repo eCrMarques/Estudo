@@ -4,51 +4,59 @@ from locais import *
 import json
 
 Vezes=0
-Player=''
+
 cidadeAnterior=''
 cidade='Pallet'
 cidades=['LigaPokemon','PassagemSubsolo','Pallet','Viridian','Pewter','Cerulean','Vermilion','Saffron','Celadon','Fuchsia','Lavender','Cinnabar']
 
 def salvar():
-    with open('Save.json','w') as Jogo:
-        save={}
+    with open ('Save.json','w') as Jogo:
+        dicionario={}
+        jogador=[]
         meuTime=[]
-        Jogar=[]
-        for valores in Player.__dict__.keys():
-            if valores!='pokemons' and valores!='bag':
-                Jogar.append(Player.__dict__[valores])
-            if valores=='bag':
-                Bolsa=Player.__dict__[valores]
-            
+        bolsa=[]
+        for item in Player.__dict__.keys():
+            if item!='pokemons' and item!='bag':
+                jogador.append(Player.__dict__[item])
+            if item=='bag':
+                bolsa=Player.__dict__[item]
         for pokemon in Player.pokemons:
-            time=[]
-            for valores in pokemon.__dict__.keys():
-                if valores =='nome' or valores =='_hp' or valores =='_atk' or valores =='_df' or valores =='_spd':
-                    time.append(pokemon.__dict__[valores])
-            meuTime.append(time)
-        save['cidade']=cidade
-        save['cidadeAnterior']=cidadeAnterior
-        save['Jogador']=Jogar
-        save['Pokemons']=meuTime
-        save['Bolsa']=Bolsa
-        json.dump(save,Jogo,indent=1)
+            lista=[]
+            lista.append(pokemon.nome)
+            lista.append(pokemon._hp)
+            lista.append(pokemon._atk)
+            lista.append(pokemon._df)
+            lista.append(pokemon._spd)
+            meuTime.append(lista)
+        dicionario['cidade']=cidade
+        dicionario['cidadeAnterior']=cidadeAnterior
+        dicionario['Jogador']=jogador
+        dicionario['Pokemons']=meuTime
+        dicionario['Bolsa']=bolsa
+        json.dump(dicionario,Jogo,indent=1)
 
-def carregar():
-        with open('Save.json','r') as Jogo:
+def Carregar():
+    try:
+        with open ('Save.json','r') as Jogo:
             Save=json.load(Jogo)
             global cidade
             global cidadeAnterior
             cidade=Save['cidade']
-            cidadeAnterior=Save['cidadeAnterior']
-            Mytime=[]
+            cidadeAnterior=Save['cidade']
+            meutime=[]
             for pokemon in Save['Pokemons']:
-                meuPokemon=NomePokemon(pokemon[0])
-                meuPokemon._hp=pokemon[1]
-                meuPokemon._atk=pokemon[2]
-                meuPokemon._df=pokemon[3]
-                meuPokemon._spd=pokemon[4]
-                Mytime.append(meuPokemon)
-            return Jogador(Save['Jogador'][0],Mytime,dinheiro=Save['Jogador'][1])
+                meupokemon=NomePokemon(pokemon[0])
+                meupokemon._hp=pokemon[1]
+                meupokemon._atk=pokemon[2]
+                meupokemon._df=pokemon[3]
+                meupokemon._spd=pokemon[4]
+                meutime.append(meupokemon)
+            Player=Jogador(Save['Jogador'][0],meutime,Save['Jogador'][1])
+            Player.bag=Save['Bolsa']
+            return Player
+    except:
+        return 
+
 
 # Curar Pokemon recebendo o objeto Pokemon e adicionando um Hp salvo Anterior para o Hp Atual
 def CurarPokemon(pokemons):
@@ -184,7 +192,6 @@ def Explorar(cidade): # Verificar as Cidades existentes e modifica a Atual ou En
         Aventura(rota)
         
 def opçõesCidade(Nome=None): # Opções dos Locais
-    carregar()
     salvar()
     if Nome==None:
         Nome=cidade
@@ -277,6 +284,7 @@ def opçõesCidade(Nome=None): # Opções dos Locais
                     opçõesCidade()
                 case '2':
                     print('''Mapa''')
+                    opçõesCidade(Nome)
                 case _:
                     print('Valor Invalido')
                     opçõesCidade(Nome)
@@ -285,8 +293,8 @@ def opçõesCidade(Nome=None): # Opções dos Locais
             opçõesCidade(Nome)
 
 
-
-if Player =='':
+Player=Carregar()
+if Player==None:
     if Menu(0.005):
         print('''
         Seja Bem-Vindo a sua aventura pokemon, primeiro precisamos saber o seu Nome''')
@@ -312,6 +320,7 @@ if Player =='':
                     print('Opção Inexistente')
             Vezes=1
         opçõesCidade()
+                
+                
 else:
     opçõesCidade()
-                

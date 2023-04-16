@@ -136,5 +136,4 @@ def rotas(nome):
         case 'SeaIsland':
             return SeaIsland
         case 'Mansion':
-            return Mansion
-
+            return 
