@@ -151,7 +151,6 @@ Pokedex=['Bulbasaur',{'tipo':['Planta','Venenoso'],'Hp':45,'Atk':45,'Def':49,'Sp
 'Mew',{'tipo':['Psiquico'],'Hp':100,'Atk':100,'Def':100,'Speed':100}
 ]
 
-
 Evoluções = [
 ['Bulbasaur','Ivysaur', 'Venusaur'],
 ['Charmander','Charmeleon', 'Charizard'], 

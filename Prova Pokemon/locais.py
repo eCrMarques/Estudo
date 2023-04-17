@@ -6,6 +6,8 @@ class Locais:
         self.selvagens=selvagens
         self.rotas=rotas
 
+
+
 ginasio={'Pallet':['Pedra','Brock',['Geodude','Onix']],
         'Cerulean':['Agua','Misty',['Staryu','Starmie',]],
          'Vermilion':['Eletrico','Lt.Surge',['Voltorb','Pikachu','Raichu']],
@@ -70,7 +72,7 @@ Rota21=Locais(['Pallet','Cinnabar'],selvagens=['Tentacruel','Tangela','Pidgeotto
 
 PowerPlant=Locais(['RockTunnel'],selvagens=['Pikachu','Electabuzz','Magneton','Electrode','Zapdos','Raichu','Joleton'])
 Rota12=Locais(['Lavender','Rota11'],selvagens=['Weepinbell','Pidgeotto','FarfetchD','Slowbro','Snorlax','Seadra'])
-Saffari=Locais(['Fuchsia'],selvagens=['Nidoking','Vileplume','Nidoqueen','Exeggutor','Licktung','Vileplume','Kangaskhan','Evee','Pinsir','Chansey','Exeggcute','Mr. Mime'])
+Saffari=Locais(['Fuchsia'],selvagens=['Nidoking','Vileplume','Nidoqueen','Exeggutor','Lickitung','Vileplume','Kangaskhan','Eevee','Pinsir','Chansey','Exeggcute','Mr. Mime'])
 
 LigaPokemon=Locais(['Rota23','Rota22'],npc=['Centro','Market'])
 Rota23=Locais(['VictoryRoad',],selvagens=['Ditto','Fearow','Arbok','Sandslash','Kingler','Poliwhirl','Primeape'])

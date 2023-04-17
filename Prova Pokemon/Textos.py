@@ -104,10 +104,10 @@ def listaLocais(locais):
      return lista
 
 def Depot(Jogador):
-    if 'Pokemon' in str(type(Jogador)):
+    Centro=Jogador[1]
+    if 'Pokemon' in str(type(Jogador[0])):
         Centro.append(Jogador[0])
         return Centro
-    Centro=Jogador[1]
     while True:
         print(f'Centro Pokemons Guardados')
         for i,pokemon in enumerate(Centro):
@@ -150,6 +150,6 @@ def Depot(Jogador):
                 except:
                     print("Valor invalido")
     return Centro
-                
+            
 
 

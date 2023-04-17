@@ -13,7 +13,7 @@ def evolução(pokemon):
                 evoluçãoPokemon=NomePokemon(lista[Index+1])
                 condição=True
     if condição:
-        if pokemon._hpanterior>evoluçãoPokemon._hp and pokemon._atk>evoluçãoPokemon._atk and pokemon._df>evoluçãoPokemon._df:
+        if pokemon._hpanterior>evoluçãoPokemon._hp and pokemon._atk>evoluçãoPokemon._atk and pokemon._df>evoluçãoPokemon._df and pokemon._spd>evoluçãoPokemon._spd:
             evoluçãoPokemon._hpanterior+=int(pokemon._hpanterior/10)
             evoluçãoPokemon._atk+=int(pokemon._atk/10)
             evoluçãoPokemon._df+=int(pokemon._df/10)
@@ -52,9 +52,6 @@ class Treinador:
                 self.pokemons.append(NomePokemon(pokemon))
             else:
                 self.pokemons.append(pokemon)
-        else:
-            print('O Pokemon foi para o (Centro)')
-            Depot(pokemon)
 
     def batalha(self, oponente, indextime=None, indexinimigo=None,):
         resultado = True
@@ -115,10 +112,13 @@ class Treinador:
                     if escolha == 'Capturado':
                         print(oponente.nome, 'Capturado')
                         input()
-                        self.capturar(oponente)
-                        self.bag.pop(0)
-                        pokemoninimigo._hp = 0
-                        break
+                        if len(self.pokemons)<6:
+                            self.capturar(oponente)
+                            self.bag.pop(0)
+                            pokemoninimigo._hp = 0
+                        else:
+                            print('Pokemon foi ao Centro')
+                            return oponente
                     elif escolha =='Falha':
                         return self.batalha(oponente)
                     elif escolha =="Fugir":
@@ -137,10 +137,13 @@ class Treinador:
                     if escolha == 'Capturado':
                         print(oponente.nome, 'Capturado')
                         input()
-                        self.capturar(oponente)
-                        pokemoninimigo._hp = 0
-                        self.bag.pop(0)
-                        break
+                        if len(self.pokemons)<6:
+                            self.capturar(oponente)
+                            self.bag.pop(0)
+                            pokemoninimigo._hp = 0
+                        else:
+                            print('Pokemon foi ao Centro')
+                            return oponente
                     elif escolha =='Falha':
                         return self.batalha(oponente)
                     elif escolha =="Fugir":
@@ -154,9 +157,12 @@ class Treinador:
                 input()
                 
         if pokemoninimigo._hp <= 0:
-            self.pokemons[poketime]._hpanterior+=int(self.pokemons[poketime]._hpanterior/15)
-            self.pokemons[poketime]._atk+=int(self.pokemons[poketime]._atk/15)
-            self.pokemons[poketime]._df+=int(self.pokemons[poketime]._df/15)
+            up=int(sum([pokemoninimigo._hp,pokemoninimigo._atk,pokemoninimigo._df,pokemoninimigo._spd])/100)
+            up=int(up+random.randrange(int(up/2),up))
+            self.pokemons[poketime]._hpanterior+=up
+            self.pokemons[poketime]._atk+=up
+            self.pokemons[poketime]._df+=up
+            self.pokemons[poketime]._spd+=up
             self.pokemons[poketime]=evolução(self.pokemons[poketime])
             if self.pokemons[poketime]._hp <= 0:
                 self.pokemons[poketime]._hp = 0

@@ -4,36 +4,50 @@ from locais import *
 import json
 import datetime
 
-Vezes=0
 Dp=[]
+
+Vezes=0
+Treinando=[]
+Login=[]
 cidadeAnterior=''
 cidade='Pallet'
 cidades=['LigaPokemon','PassagemSubsolo','Pallet','Viridian','Pewter','Cerulean','Vermilion','Saffron','Celadon','Fuchsia','Lavender','Cinnabar']
 
-def Idle():
-    try:
-        with open('Save.json','r') as Jogo:
-            lista=json.load(Jogo)
-            x=datetime.datetime.now()
-            tempoAtual=[x.strftime("%x").split('/'),x.strftime("%X").split(':')]
-            segundos=[]
-            for i,time in enumerate(lista["Tempo"]):
-                if time==lista["Tempo"][1]:
-                    segundos.append((3600*(int(tempoAtual[i][0])-int(time[0]))))
-                    segundos.append((((int(tempoAtual[i][1])-int(time[1]))*60)))
-                    segundos.append((int(tempoAtual[i][2])-int(time[2])))
-                elif time!=lista["Tempo"][1]:
-                    segundos.append((2592000*(int(tempoAtual[i][0])-int(time[0]))))
-                    segundos.append((((int(tempoAtual[i][1])-int(time[1]))*86400)))
-                    segundos.append(((int(tempoAtual[i][2])-int(time[2]))*86400*12))
-            
-            print(f'Você ficou {round((sum(segundos)/3600)-0.5)} Horas| {round((sum(segundos)%3600/60)-0.5)} Minutos| {sum(segundos)%60} Segundos| fora do jogo')
-            print(f'Ganhou {int(sum(segundos)/5)} de Dinheiro')
-            Player.dinheiro+=int(sum(segundos)/5)
-            input()
-    except:
-        pass
-def salvar():
+def Idle(Estado,treino=None):
+
+    x=datetime.datetime.now()
+    tempo=[x.strftime("%x").split('/'),x.strftime("%X").split(':')]    
+    global Login
+    encerrar=False
+    segundos=[]
+    if Estado == 'Treino' and Login!='':
+        op=input('Você Deseja encerrar o treino?\ns- Sim n- Não\n')
+        if op.lower()=='s':
+            encerrar=True
+        else:
+            return
+        if encerrar and Estado=='Treino':
+            for i,time in enumerate(Login):
+                if time==Login[1]:
+                    segundos.append((3600*(int(tempo[i][0])-int(time[0]))))
+                    segundos.append((((int(tempo[i][1])-int(time[1]))*60)))
+                    segundos.append((int(tempo[i][2])-int(time[2])))
+                elif time!=Login[1]:
+                    segundos.append((2592000*(int(tempo[i][0])-int(time[0]))))
+                    segundos.append((((int(tempo[i][1])-int(time[1]))*86400)))
+                    segundos.append(((int(tempo[i][2])-int(time[2]))*86400*12))
+            stats=int(sum(segundos)/(1800/len(Treinando)))
+            print(f'Você Encerrou o treino..\n Status ganho +{stats}')
+            for pokemon in Treinando:
+                pokemon._hp+=stats
+                pokemon._hpanterior+=stats
+                pokemon._atk+=stats
+                pokemon._df+=stats
+                pokemon._spd+=stats
+            Login=''
+            return 'Encerrado'
+
+def salvar(Dados=None):
     with open ('Save.json','w') as Jogo:
         global Dp
         dicionario={}
@@ -62,7 +76,9 @@ def salvar():
         dicionario['Jogador']=jogador
         dicionario['Pokemons']=meuTime
         dicionario['Bolsa']=bolsa
-        dicionario["Tempo"]=tempoAtual
+        dicionario["Tempo"]=Login
+        if Dados!=None:
+            dicionario["Tempo"]=tempoAtual
         for pokemon in Dp:
             lista=[]
             lista.append(pokemon.nome)
@@ -72,7 +88,18 @@ def salvar():
             lista.append(pokemon._spd)
             lista.append(pokemon._hpanterior)
             Dptime.append(lista)
+        Treino=[]
+        for pokemon in Treinando:
+            lista=[]
+            lista.append(pokemon.nome)
+            lista.append(pokemon._hp)
+            lista.append(pokemon._atk)
+            lista.append(pokemon._df)
+            lista.append(pokemon._spd)
+            lista.append(pokemon._hpanterior)
+            Treino.append(lista)
         dicionario["Depot"]=Dptime
+        dicionario["Treinando"]=Treino
         json.dump(dicionario,Jogo,indent=1)
 
 def Carregar():
@@ -82,6 +109,9 @@ def Carregar():
             global cidade
             global cidadeAnterior
             global Dp
+            global Login
+            global Treinando
+            Treino=[]
             cidade=Save['cidade']
             cidadeAnterior=Save['cidade']
             meutime=[]
@@ -102,7 +132,19 @@ def Carregar():
                 meupokemon._spd=pokemon[4]
                 meupokemon._hpanterior=pokemon[5]
                 DpTime.append(meupokemon)
+            for pokemon in Save["Treinando"]:
+                meupokemon=NomePokemon(pokemon[0])
+                meupokemon._hp=pokemon[1]
+                meupokemon._atk=pokemon[2]
+                meupokemon._df=pokemon[3]
+                meupokemon._spd=pokemon[4]
+                meupokemon._hpanterior=pokemon[5]
+                Treino.append(meupokemon)
             Dp=DpTime
+            Treinando=Treino
+            if Save["Tempo"]!='' and type(Save["Tempo"]!=list):
+                Login=Save["Tempo"]
+            print(Login)
             Player=Jogador(Save['Jogador'][0],meutime,Save['Jogador'][1])
             Player.bag=Save['Bolsa']
             return Player
@@ -160,6 +202,8 @@ def Aventura(local):
                 print(f'Um {selvagem.nome} Apareceu !!!!')
                 input()
                 resultado=Player.batalha(selvagem)
+                if 'Pokemon' in str(resultado.__class__):
+                    Dp.append(resultado) 
                 input()
             if resultado:
                 cidade=Nome  # Se Ganhar altera a variavel global cidade Para a Rota Atual
@@ -245,18 +289,28 @@ def Explorar(cidade): # Verificar as Cidades existentes e modifica a Atual ou En
         
 def opçõesCidade(Nome=None): # Opções dos Locais
     salvar()
+    print(f'{Login}aaa')
     if Nome==None:
         Nome=cidade
     else:
         Nome=Nome
+    Ginasio='Ginasio'
+    Residencia='Centro Pokemon\n        4-- Market'
+    nP='5'
+    if cidade not in cidades:
+        Ginasio='Procurar Treinadores'
+        Residencia='Treinamento'
+        nP='4'
     print(f'''
         \t---Local atual: {Nome}--- \n
         1-- Explorar
-        2-- Procurar Treinadores
-        3-- Centro Pokemon
-        4-- Market
-        5-- Perfil''')
-    match input(''):
+        2-- {Ginasio}
+        3-- {Residencia}
+        {nP}-- Perfil''')
+    op=input('')
+    if nP=='4' and op=='4':
+        op='5'
+    match op:
         case '1':
             Explorar(Nome)
         case '2':
@@ -303,7 +357,42 @@ def opçõesCidade(Nome=None): # Opções dos Locais
                 else:
                     pass
             else:
-                print('Não há Centro Pokemon Por Aqui')  # Se o Local Não se tratar de Cidade
+                global Treinando
+                if len(Treinando)==0 or Login=='':
+                    op=input('Você Deseja Treinar os seus Pokemons??')
+                    if op.lower()=='s':
+                        while True:
+                            print(f'\nMeus Pokemons')
+                            for i,pokemon in enumerate(Player.pokemons):
+                                print(f'{i+1:3}--{pokemon.nome:12}', end='')
+                            pokeTreino=input('Coloque os pokemons que deseja Treinar\ns-Sair\n')
+                            if pokeTreino.lower()=='s':
+                                break
+                            if pokeTreino.isnumeric()==False or int(pokeTreino)>len(Player.pokemons) or len(Player.pokemons)==1:
+                                print('Pokemon indisponivel')
+                            else:
+                                Treinando.append(Player.pokemons[int(pokeTreino)-1])   
+                                Player.pokemons.pop(int(pokeTreino)-1)
+                                salvar('Tempo')
+                                Carregar()
+                                print('Treinando:')
+                                for pokemon in Treinando:
+                                    print(f'|{pokemon.nome:<12}',end='')
+                elif Login!='':
+                    print('Treinando')
+                    for pokemon in Treinando:
+                        print(f'|{pokemon.nome:^12}|',end='')
+                    print(end='\n')
+                    if Idle('Treino')=='Encerrado':
+                        for pokemon in Treinando:
+                            if len(Player.pokemons)<6:
+                                Player.pokemons.append(pokemon)
+                            else:
+                                Dp.append(pokemon)
+                        Treinando.clear()
+                        input()
+                    opçõesCidade()
+                    
                 pass
             opçõesCidade(Nome)
         case '4':
@@ -363,6 +452,7 @@ def opçõesCidade(Nome=None): # Opções dos Locais
                     print('''Mapa''')
                     opçõesCidade(Nome)
                 case '3':
+                    salvar(Login)
                     exit()
                 case _:
                     print('Valor Invalido')
@@ -402,5 +492,4 @@ if Player==None:
                 
                 
 else:
-    Idle()
     opçõesCidade()

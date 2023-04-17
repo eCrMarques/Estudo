@@ -1,0 +1,105 @@
+{
+ "cidade": "Fuchsia",
+ "cidadeAnterior": "Fuchsia",
+ "Jogador": [
+  "1",
+  577200
+ ],
+ "Pokemons": [
+  [
+   "Charmander",
+   10004,
+   60002,
+   53,
+   75,
+   49
+  ],
+  [
+   "Lickitung",
+   -7,
+   55,
+   75,
+   30,
+   90
+  ],
+  [
+   "Exeggcute",
+   -9,
+   40,
+   80,
+   40,
+   60
+  ],
+  [
+   "Chansey",
+   -22,
+   5,
+   5,
+   50,
+   250
+  ],
+  [
+   "Pinsir",
+   -10,
+   125,
+   100,
+   85,
+   65
+  ],
+  [
+   "Mr. Mime",
+   -6,
+   45,
+   65,
+   90,
+   40
+  ]
+ ],
+ "Bolsa": [
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  "Ultra Ball",
+  ""
+ ],
+ "Tempo": [],
+ "Depot": [
+  [
+   "Eevee",
+   55,
+   55,
+   50,
+   55,
+   55
+  ],
+  [
+   "Nidoking",
+   81,
+   102,
+   77,
+   85,
+   81
+  ],
+  [
+   "Mr. Mime",
+   40,
+   45,
+   65,
+   90,
+   40
+  ]
+ ],
+ "Treinando": []
+}
