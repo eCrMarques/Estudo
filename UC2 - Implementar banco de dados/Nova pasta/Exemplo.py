@@ -3,9 +3,9 @@ import psycopg2
 conn = psycopg2.connect(dbname="Escola",host='localhost',port='5432', user='postgres', password= 'postgres')
 
 cursor = conn.cursor()
-
-cursor.execute('''
-Select * from "Aluno" order by "Cod_Matricula" asc
+Aluno='"Aluno"'
+cursor.execute(f'''
+Select * from {Aluno} order by "Cod_Matricula" asc
 ''')
 
 
