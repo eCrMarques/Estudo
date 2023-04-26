@@ -1,0 +1,22 @@
+select * from "Matricula"
+select "Semestre","Ano","Ano"-"Semestre" as "Novo" from "Matricula"
+
+
+delete from "Aluno"
+where
+"Cod_Matricula">'5';
+
+
+insert into "Aluno"("cpf","nome","ano de nascimento")
+values('54654',concat((select max("Cod_Matricula")+'1' from "Aluno"),'João'),'1564')
+
+update "Aluno" 
+set "Cod_Matricula"="Cod_Matricula"+'1'-((select min("Cod_Matricula") from "Aluno" where "Cod_Matricula">'5')-(select max("Cod_Matricula") from "Aluno" where "Cod_Matricula"<'6'))
+where "Cod_Matricula">'5'
+
+alter table "Aluno"
+add "Nacionalidade" varchar(255) default 'Brasileiro'
+
+select * from "Aluno" order by "Cod_Matricula" asc
+
+select * from "Disciplinas"
