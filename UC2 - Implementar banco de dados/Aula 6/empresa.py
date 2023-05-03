@@ -81,24 +81,32 @@ def verDepartamentos(id=None):
             print(f'Id: {Funcionario[0]:<3} Nome: {Funcionario[1]:<15} Salario: {Funcionario[2]:<15} Cargo: {Funcionario[3]:<15} Departamento {Funcionario[4]:<3}')
 
 def alterar():
+    padrao=['"Nome_Func"','"Salário_Func"','"Cargo_Func"','"Id_Dept"']
     verFuncionarios()
-    id=f"'input('Id: ')'"
+    id=f"'{input('Id: ')}'"
     verFuncionarios(id)
-    nome=f"'{input('Insira o Nome')}'"
-    salario=f"'{input('Insira o Salario')}'"
-    cargo=f"'{input('Insira o Cargo')}'"
-    idDep=f"'{input('Insira o Id Departamento')}'"
+    nome=f"'{input('Insira o Nome: ')}'"
+    salario=f"'{input('Insira o Salario: ')}'"
+    cargo=f"'{input('Insira o Cargo: ')}'"
+    idDep=f"'{input('Insira o Id Departamento: ')}'"
+    
+    for i,item in enumerate((nome,salario,cargo,idDep)):
+        if item =="''":
+            item=padrao[i]
+
 
     sql=f"""
     Update "Funcionarios"
     set 
-    "Nome_Func"= {nome} ,
+    "Nome_Func"= {nome},
     "Salário_Func"= {salario},
     "Cargo_Func"= {cargo},
     "Id_Dept" = {idDep}
     where
     "Id_Func"={id}
     """
+
+    return sql
 
 def criarFuncionario():
     nome=input("Insira o Nome")
@@ -157,13 +165,15 @@ try:
         match input():
             case '1':
                 verFuncionarios()
-                op=input('1-Procurar por Id\n')
+                op=input('1-Procurar por Id\n2-Alterar')
                 if op=='1':
                     id=f"'{input('Id do Funcionario: ')}'"
                     verFuncionarios(id)
-                else:
-                    pass
-                
+                elif op=='2':
+                    try:
+                        cursor.execute(alterar())
+                    except(Exception,psycopg2.Error) as error:
+                        print(f'Valor incorreto {error}')
             case '2':
                 verDepartamentos()
                 op=input('1-Procurar por Id\n')
