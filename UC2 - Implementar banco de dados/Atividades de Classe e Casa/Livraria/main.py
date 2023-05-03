@@ -4,9 +4,33 @@ from Modelo.classAluguél import Aluguel
 from Modelo.classCliente import Cliente
 from Modelo.classLivro import Livro
 
+def Atualizar(tipo):
+    Tipos={"Cliente":Cliente,"Aluguel":Aluguel,"Livro":Livro}
+    Visualizar(tipo)
+    dados=conexaoBanco.consultarBanco(f"""
+    select * from "{tipo}" """)
+    id=input(f"Digite o Id do {tipo}")
+    if int(id) in [item[0] for item in dados]:
+        objeto=[item for item in dados]
+        for lista in objeto:
+            if lista[0]==id:
+                for item in lista:
+                    print(item)
+        print(objeto)
+        
+    
+
+def Excluir(tipo):
+    id=input(f"Id do {tipo}: ")
+    try:
+        conexaoBanco.Excluir(tipo,id)
+    except:
+        print("Dados Não Encontrados")
+    
+
 def AdicionarLivro():
     
-    NovoLivro=Livro(None,input("Digite O Nome: "),input("Quantidade: "), input("Data Lançamento: "))
+    NovoLivro=Livro(None,input("Digite O Nome: "),input("Quantidade: "), input("Data Lançamento Ex(Ano-Mês-Dia): "))
     try:
         conexaoBanco.manipularBanco(NovoLivro.inserirLivro())
     except:
@@ -35,7 +59,7 @@ def AdicionarAluguel():
         NovoAluguel=Aluguel(None,input("Digite o id do Cliente: "),livro,None)
         try:
             conexaoBanco.manipularBanco(NovoAluguel.inserirAluguel())
-            conexaoBanco.manipularBanco(NovoAluguel.Retirar())
+            conexaoBanco.manipularBanco(NovoAluguel.Retirar(quantidade))
         except:
             print('Invalido')
 
@@ -71,7 +95,8 @@ while True:
         2- Ver Clientes
         3- Alugar Livro
         4- Adicionar 
-        5- Sair   
+        5- Remover
+        6- Sair   
         ''')
 
         match op:
@@ -93,16 +118,28 @@ while True:
                     input()
                 
             case '4':
-                op= input('1-Adicionar Livro \n2-Adicionar Cliente')
+                op= input('1-Adicionar Livro \n2-Adicionar Cliente\n')
                 match op:
                     case '1':
                         AdicionarLivro()
                     case '2':
                         AdicionarCliente()
             case '5':
+                op=input("\t-Remover-\n1-Cliente\n2-Livro\n")
+                match op:
+                    case '1':
+                        Excluir("Cliente")
+                    case '2':
+                        Excluir("Livro")
+                    case _:
+                        print()
+                print("Excluido")
+                        
+            case '6':
                 break
             case _:
-                print('Insira uma Opção Valida')
+                print("Opção Incorreta")
+                Atualizar("Cliente")
 
     except(psycopg2.Error,Exception) as error:
         print("Conexão Erro ", error)

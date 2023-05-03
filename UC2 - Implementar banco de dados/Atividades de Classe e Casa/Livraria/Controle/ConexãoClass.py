@@ -33,3 +33,18 @@ class Conexão:
         cursor.close()
 
         conn.close()
+
+    def Excluir(self, tipo, id):
+        conn = psycopg2.connect(dbname = self._dbname, host = self._host, port = self._port, user = self._user, password = self._password)
+        cursor = conn.cursor()
+
+        cursor.execute(f"""
+        Delete From "{tipo}"
+        where "id_{tipo}"={id}"""
+        )
+
+        conn.commit()
+
+        cursor.close()
+
+        conn.close()

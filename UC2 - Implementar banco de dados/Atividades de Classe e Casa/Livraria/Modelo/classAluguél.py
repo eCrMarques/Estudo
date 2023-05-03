@@ -13,12 +13,10 @@ class Aluguel:
 
         return sql
     
-    def Retirar(self):
-        sql=f""""
-        UPDATE "Livro" 
-        set
-        "Quantidade" = "Quantidade" - '1'
-        where
-        "id_Cliente"='{self._idLivro}' """
+    def Retirar(self,quantidade):
+        sql=f"""
+        Update "Livro"
+        set "Quantidade" = '{int(quantidade)-1}'
+        where "id_Livro"='{self._idLivro}' """
 
         return sql
