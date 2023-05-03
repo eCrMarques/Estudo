@@ -5,19 +5,18 @@ from Modelo.classCliente import Cliente
 from Modelo.classLivro import Livro
 
 def Atualizar(tipo):
-    Tipos={"Cliente":Cliente,"Aluguel":Aluguel,"Livro":Livro}
     Visualizar(tipo)
     dados=conexaoBanco.consultarBanco(f"""
     select * from "{tipo}" """)
     id=input(f"Digite o Id do {tipo}")
     if int(id) in [item[0] for item in dados]:
-        objeto=[item for item in dados]
-        for lista in objeto:
-            if lista[0]==id:
-                for item in lista:
-                    print(item)
-        print(objeto)
-        
+        if tipo == "Cliente":
+            NovoCliente=Cliente(id,input("Digite O Nome: "),input("Telefone Ex:(123456789): "), input("Cpf: "))
+            conexaoBanco.manipularBanco(NovoCliente.atualizar())
+        elif tipo =="Livro":
+            NovoLivro=Livro(id,input("Digite O Nome: "),input("Quantidade: "), input("Data Lançamento Ex(Ano-Mês-Dia): "))
+
+
     
 
 def Excluir(tipo):

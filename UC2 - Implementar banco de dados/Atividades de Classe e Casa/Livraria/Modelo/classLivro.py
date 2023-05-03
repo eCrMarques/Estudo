@@ -12,3 +12,15 @@ class Livro:
         """
         
         return sql
+
+    def atualizar(self):
+        sql=f"""
+        Update "Livro"
+        set
+        ='{self._nome}'
+        '={self._quantidade}'
+        '={self._lançamento}')
+        where "id_Livro" = '{self._id}'
+        """
+        
+        return sql

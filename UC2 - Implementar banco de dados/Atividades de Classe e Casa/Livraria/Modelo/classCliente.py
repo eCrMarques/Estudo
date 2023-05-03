@@ -13,3 +13,11 @@ class Cliente:
         
         return sql
     
+    def atualizar(self):
+        sql=f"""
+        Update "Cliente"
+        Values(default,'{self._nome}','{self._Telefone}','{self._Cpf}')
+        where "id_Cliente" = '{self._id}'
+        """
+
+        return sql
