@@ -12,9 +12,10 @@ class Conexão:
         conn = psycopg2.connect(dbname = self._dbname, host = self._host, port = self._port, user = self._user, password = self._password)
 
         cursor = conn.cursor()
-
-        cursor.execute(sql)
-
+        try:
+            cursor.execute(sql)
+        except:
+            return False
         resultado = cursor.fetchall()
 
         cursor.close()
@@ -25,26 +26,15 @@ class Conexão:
     def manipularBanco(self,sql):
         conn = psycopg2.connect(dbname = self._dbname, host = self._host, port = self._port, user = self._user, password = self._password)
         cursor = conn.cursor()
+        try:    
+            cursor.execute(sql)
 
-        cursor.execute(sql)
+            conn.commit()
 
-        conn.commit()
+            cursor.close()
 
-        cursor.close()
+            conn.close()
+            return True
+        except:
+            return False
 
-        conn.close()
-
-    def Excluir(self, tipo, id):
-        conn = psycopg2.connect(dbname = self._dbname, host = self._host, port = self._port, user = self._user, password = self._password)
-        cursor = conn.cursor()
-
-        cursor.execute(f"""
-        Delete From "{tipo}"
-        where "id_{tipo}"={id}"""
-        )
-
-        conn.commit()
-
-        cursor.close()
-
-        conn.close()

@@ -16,7 +16,10 @@ class Cliente:
     def atualizar(self):
         sql=f"""
         Update "Cliente"
-        Values(default,'{self._nome}','{self._Telefone}','{self._Cpf}')
+        set
+        "Nome_Cliente"='{self._nome}',
+        "Telefone_Cliente"='{self._Telefone}',
+        "Cpf_Cliente"='{self._Cpf}'
         where "id_Cliente" = '{self._id}'
         """
 
