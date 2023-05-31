@@ -1,0 +1,28 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AddPokemon</title>
+</head>
+
+<body>
+    <h1 style="text-align:center" >Alterar Pokemon</h1>
+    
+        <form method="post">
+            <label > Alterar Pokemon:</label>
+            <input  placeholder="Id Do Pokemon" name="ID" value="{{request.form['ID']}}">
+            <input  placeholder="Nome Do Pokemon" name="NOME" value="{{request.form['NOME']}}">
+            <input  placeholder="Altura Do Pokemon" name="ALTURA" value="{{request.form['ALTURA']}}">
+            <input  placeholder="Peso Do Pokemon" name="PESO" value="{{request.form['PESO']}}">
+            <input  placeholder="Tipo Do Pokemon" name="TIPO" value="{{request.form['TIPO']}}"> 
+            <button type="submit"> Alterar</button>
+        </form>
+    <ul>
+        <li onclick='style="color: red;"'>Pokedex:{{Poke[0]}}    | Nome :{{Poke[1]}}    | Altura :{{Poke[2]}}    | Peso :{{Poke[3]}}    | Tipo :{{Poke[4]}}    | Região :{{Poke[5]}}</li>
+    </ul>
+
+    <a href="/">Voltar</a>
+
+</body>
+
+</html>

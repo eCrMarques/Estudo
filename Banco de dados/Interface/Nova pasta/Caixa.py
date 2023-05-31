@@ -1,7 +1,6 @@
 from customtkinter import *
 
 
-
 class App(CTk):
     def __init__(self):
         super().__init__()

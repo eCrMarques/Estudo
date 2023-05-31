@@ -1,0 +1,26 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AddPokemon</title>
+</head>
+
+<body>
+    <h1 style="text-align:center" >Adicionar Pokemon</h1>
+    
+        <form method="post">
+            <label > Excluir Pokemon ID:</label>
+            <input  placeholder="Id Do Pokemon" name="ID" value="{{request.form['ID']}}"> <button type="submit"> Deletar</button>
+        </form>
+    <ul>
+        {%for pokemon in listaPokemons%}
+        <a onclick='href="/Pokemons/{{pokemon[0]}}"' style="color: black;"><li>Pokedex:{{pokemon[0]}}    | Nome :{{pokemon[1]}}    | Altura :{{pokemon[2]}}    | Peso :{{pokemon[3]}}    | Tipo :{{pokemon[4]}}    | Região :{{pokemon[5]}}</li>
+        </a>
+        {%endfor%}
+    </ul>
+
+    <a href="/">Voltar</a>
+
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+class staticmethod():
+    print('asd')

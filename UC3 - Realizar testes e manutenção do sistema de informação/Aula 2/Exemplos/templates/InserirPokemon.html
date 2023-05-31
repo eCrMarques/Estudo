@@ -1,0 +1,21 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pokedex</title>
+</head>
+
+<body>
+    <h1>Pokemons</h1>
+    <p> Lista</p>
+    <ul>
+        {%for pokemon in listaPokemons%}
+        <li>Pokedex:{{pokemon[0]}}    | Nome :{{pokemon[1]}}    | Altura :{{pokemon[2]}}    | Peso :{{pokemon[3]}}    | Tipo :{{pokemon[4]}}    | Região :{{pokemon[5]}}</li>
+        {%endfor%}
+    </ul>
+
+    <a href="/Pokemons">Texto Link</a>
+
+</body>
+
+</html>
