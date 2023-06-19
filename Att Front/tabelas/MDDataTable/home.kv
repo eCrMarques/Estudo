@@ -1,0 +1,317 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+<Check@MDCheckbox>:
+    group: 'group'
+    size_hint: None, None
+    size: dp(48), dp(48)
+    
+<AddCard>:
+    id: card
+    orientation: 'vertical'
+    size_hint: .6, .3
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    md_bg_color: app.theme_cls.primary_dark
+
+    MDFloatLayout:
+        MDTopAppBar:
+            id: addtoolbar
+            title: "Registro rápido"
+            elevation:0
+            md_bg_color: app.theme_cls.primary_color
+            pos_hint: {"center_x": 0.5, "center_y": 0.97}
+            right_action_items: [["close", lambda x: root.fechar()]]
+
+        MDTextField:
+            hint_text: 'Nome'
+            fill_color_normal: app.theme_cls.primary_dark
+            size_hint_x: .8
+            pos_hint: {'center_x': .5, 'center_y': .7}
+            write_tab: False
+            multiline: False
+
+        MDTextField:
+            hint_text: 'Valor'
+            fill_color_normal: app.theme_cls.primary_dark
+            size_hint_x: .8
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            write_tab: False
+            multiline: False
+
+        MDFillRoundFlatButton:
+            id: 'add_button'
+            text: 'Adicionar'
+            pos_hint: {'center_x': .5, 'center_y': .2}
+            padding: [50, 0, 50, 0]    
+
+<PlotWidgetPie>
+<PlotWidgetBar>
+<Home>: 
+    md_bg_color: app.theme_cls.primary_color
+    ScreenManager:
+        id: screen_nav
+        transition: NoTransition()
+        MDScreen:
+            name: 'overview'
+
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    id: layout
+                    padding: 15
+                    spacing: 15
+                    size_hint: 1, None
+                    height: self.minimum_height
+
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        size_hint: 1, None
+
+                    MDLabel:
+                        text: "Porcentagem da Receita gasta"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        halign: "center"
+                        canvas.before:
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+
+                    MDProgressBar:
+                        color: '#5679ad'
+                        value:75
+                        size_hint_y: None
+                        height:35
+                        halign: "center"
+
+                    PlotWidgetBar:
+                        size_hint_y: None
+                        height: 900
+                        halign: "center"
+                        canvas.before:
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+
+                    PlotWidgetPie:
+                        size_hint_y: None
+                        height: 900
+                        halign: "center"
+                        canvas.before:
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+
+        MDScreen:
+            name: 'add'
+            MDCard:
+                size_hint: 0.75, 0.45
+                pos_hint: {"center_x": 0.5, "center_y": 0.65}
+                md_bg_color: app.theme_cls.primary_dark
+
+            MDLabel:
+                text: 'Adicionar'
+                pos_hint: {'center_y':.85}
+                halign: 'center'
+
+            # MDSegmentedControl:
+            #     md_bg_color: app.theme_cls.primary_color
+            #     segment_color: app.theme_cls.primary_dark
+
+                
+            MDSegmentedButton:
+                pos_hint: {"center_x": 0.5, "center_y":0.80}
+                size_hint_x: .3
+
+                MDSegmentedButtonItem:
+                    text: "Despesas"
+
+                MDSegmentedButtonItem:
+                    text: "Renda"
+
+
+            MDTextField:
+                icon_left: "plus-box"
+                hint_text: "nome do registro"
+                size_hint_x: .65
+                pos_hint: {"center_x": 0.5, "center_y":0.70}
+                # required: True
+                helper_text_mode: "on_error"
+                multiline: False
+                # line_color_normal: app.theme_cls.accent_color
+
+            MDTextField:
+                icon_left: "currency-usd"
+                hint_text: "valor do registro"
+                size_hint_x: .65
+                pos_hint: {"center_x": 0.5, "center_y":0.60}
+                # required: True
+                helper_text_mode: "on_error"
+                multiline: False
+                # line_color_normal: app.theme_cls.accent_color
+
+
+            MDTextField:
+                icon_left: "calendar-range"
+                hint_text: "data do registro"
+                size_hint_x: .65
+                pos_hint: {"center_x": 0.5, "center_y":0.50}
+                # required: True
+                helper_text_mode: "on_error"
+                multiline: False
+                # line_color_normal: app.theme_cls.accent_color
+
+
+            MDLabel:
+                id: data
+                font_size: 1
+
+        MDScreen:
+            name: 'search'
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    id: layout
+                    padding: 15
+                    spacing: 15
+                    size_hint: 1, None
+                    height: self.minimum_height
+
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        size_hint: 1, None
+
+                    MDLabel:
+                        text: "Selecione o Mês"
+                        size_hint_y: None
+                        height: dp(5)
+                        halign: "center"
+                        canvas.before:
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+
+                    MDFillRoundFlatIconButton:
+                        id: button
+                        icon: "arrow-down-drop-circle"
+                        text: "Mês"
+                        # text_color: .12, .12, .12
+                        size_hint: .9, .06
+                        pos_hint: {'center_x': .5, 'center_y': .6}
+                        on_release: root.menu.open()
+
+                    Table:
+                        background_color: "red"
+                        id: example
+                        size_hint_y: None
+                        height: 1200
+                        halign: "center"
+                        pos_hint: {'center_x': .5, 'center_y': .2}
+                        canvas.before:
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+
+
+        MDScreen:
+            name: 'calendar'
+            MDLabel:
+                text: 'Suporte'
+                pos_hint: {'center_y':.5}
+                halign: 'center'
+                
+
+    MDTopAppBar:
+        id: toolbar
+        type: "top"
+        elevation:0
+        md_bg_color: app.theme_cls.primary_dark
+        pos_hint: {"center_x": 0.5, "center_y": 0.97}
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        right_action_items: [["plus", lambda x: root.abrir_card()]]
+
+
+    MDFloatLayout:
+        md_bg_color: app.theme_cls.primary_dark
+        pos_hint:{'center_x': .5}
+        size_hint: .6, None
+        size: "48dp", "48dp"
+        orientation: 'horizontal'
+        radius:16
+        MDIconButton:
+            icon: 'home-assistant'
+            pos_hint: {'center_x': .25, 'center_y': .5}
+            on_release: screen_nav.current = 'overview'
+        MDIconButton:
+            icon: 'layers-search'
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            on_release: screen_nav.current = 'search'
+        MDIconButton:
+            icon: 'pen-plus'
+            pos_hint: {'center_x': .75, 'center_y': .5}
+            on_release: screen_nav.current = 'add'
+
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        md_bg_color: app.theme_cls.primary_color
+        radius:0
+        orientation: "vertical"
+        padding: "15dp"
+        spacing: "6dp"
+        MDFloatLayout:
+            pos_hint: {'center_x':0.3, 'center_y':0.90}
+            size_hint: None, None
+            size: "150dp", "150dp"
+            canvas:
+                Color:
+                    rgb: (223/255, 237/255, 240/255, 0)
+                Ellipse:
+                    pos: self.pos
+                    size: self.size
+                    source: 'images/avatar.jpg'
+        MDLabel:
+            text: "Alucard"
+            font_style: "Button"
+            size_hint_y: None
+            height: self.texture_size[1]
+            pos_hint: {'center_x':0.6, 'center_y':0.90}
+
+        MDLabel:
+            text: "alucard@gmail.com"
+            font_style: "Caption"
+            size_hint_y: None
+            height: self.texture_size[1]
+            pos_hint: {'center_x':0.6, 'center_y':0.90}
+
+        ScrollView:
+            MDList:
+                OneLineAvatarListItem:
+                    text: "Perfil"
+                    IconLeftWidgetWithoutTouch:
+                        icon: "account-circle-outline"
+
+                OneLineAvatarListItem:
+                    text: "Suporte"
+                    IconLeftWidgetWithoutTouch:
+                        icon: 'face-agent'
+
+                OneLineAvatarListItem:
+                    text:'Configurações'
+                    IconLeftWidgetWithoutTouch:
+                        icon: 'cog'    
+
+                OneLineAvatarListItem:
+                    on_press:
+                        nav_drawer.set_state("close")
+                    on_press:
+                        root.go_login()
+                    
+                    text: "Logout"
+                    IconLeftWidgetWithoutTouch:
+                        icon: 'logout-variant'
